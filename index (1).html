@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wassem Bakes — Gluten-Free & Vegan Baking</title>
+<meta name="description" content="Professional gluten-free and vegan baking with 20+ years of experience. NYC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF8F1C;
+    --blue: #8DB9CA;
+    --yellow: #FFD451;
+    --cream: #F5EFE4;
+    --ink: #1A1714;
+    --paper: #FAFAF7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 1.5rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    mix-blend-mode: difference;
+    color: white;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    font-style: italic;
+  }
+  .nav-links { display: flex; gap: 2rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; }
+  .nav-links a { opacity: 0.8; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    background: var(--paper);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 15%; right: -10%;
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+    opacity: 0.25;
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .hero-photo {
+    aspect-ratio: 3/2;
+    background: var(--cream);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    animation: fadeUp 0.8s 0.5s both;
+    box-shadow: 0 30px 60px -20px rgba(26, 23, 20, 0.25);
+  }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--cream), #ddd1b8);
+    color: var(--ink);
+    opacity: 0.5;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    padding: 2rem;
+    text-align: center;
+  }
+  .hero-photo-placeholder span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-style: normal;
+    opacity: 0.7;
+  }
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: end;
+    }
+    .hero-photo { max-width: 100%; }
+  }
+  .hero-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--orange);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.8s 0.2s both;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3.5rem, 11vw, 10rem);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s 0.4s both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--orange);
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    padding-top: 2rem;
+    border-top: 1px solid var(--ink);
+    animation: fadeUp 0.8s 0.6s both;
+  }
+  .hero-meta div span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+    margin-bottom: 0.5rem;
+  }
+  .hero-meta div p {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section base */
+  section { padding: 6rem 2rem; position: relative; }
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+  }
+  .section-title em { font-style: italic; color: var(--orange); }
+
+  /* Reels */
+  .reels { background: var(--ink); color: var(--paper); }
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .reel {
+    aspect-ratio: 9/16;
+    background: #2a2622;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.4s ease;
+  }
+  .reel:hover { transform: translateY(-8px); }
+  .reel iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .reel-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #2a2622, #1A1714);
+    color: rgba(255,255,255,0.3);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  /* Email */
+  .email-section {
+    background: var(--cream);
+    text-align: left;
+  }
+  .email-wrap { max-width: 800px; }
+  .email-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .email-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--ink);
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 0;
+  }
+  .email-form input:focus { outline: 2px solid var(--orange); outline-offset: -2px; }
+  .email-form button {
+    padding: 1.1rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    font-family: inherit;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .email-form button:hover { background: var(--orange); }
+
+  /* Blog link */
+  .blog-link { background: var(--paper); }
+  .big-link {
+    display: block;
+    padding: 3rem 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    font-style: italic;
+    transition: padding-left 0.4s ease, color 0.3s;
+    position: relative;
+  }
+  .big-link:hover { padding-left: 3rem; color: var(--orange); }
+  .big-link::after {
+    content: '→';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-style: normal;
+    transition: transform 0.3s;
+  }
+  .big-link:hover::after { transform: translateY(-50%) translateX(10px); }
+
+  /* Press */
+  .press { background: var(--ink); color: var(--paper); }
+  .press-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .press-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .stat {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+  }
+  .press-body p { margin-bottom: 1.5rem; font-size: 1.05rem; opacity: 0.85; }
+  .press-body a.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    background: var(--yellow);
+    color: var(--ink);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition: background 0.2s;
+  }
+  .press-body a.btn:hover { background: var(--orange); color: var(--paper); }
+
+  /* Contact */
+  .contact { background: var(--orange); color: var(--ink); }
+  .contact h2 { color: var(--ink); }
+  .contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .contact-card {
+    background: var(--paper);
+    padding: 2rem;
+    border-radius: 4px;
+  }
+  .contact-card span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .contact-card a {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    word-break: break-word;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .contact-card a:hover { border-color: var(--ink); }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 2rem 2rem;
+    font-size: 0.85rem;
+  }
+  .footer-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .footer-wrap a { opacity: 0.6; transition: opacity 0.2s; }
+  .footer-wrap a:hover { opacity: 1; }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1rem; font-size: 0.7rem; }
+    section { padding: 4rem 1.25rem; }
+    .hero { padding: 6rem 1.25rem 3rem; }
+    .press-grid { grid-template-columns: 1fr; }
+    .press-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">wassem bakes</div>
+  <div class="nav-links">
+    <a href="#reels">Work</a>
+    <a href="#press">Press</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-label">Est. 2003 · New York</div>
+    <h1>Gluten-free.<br>Vegan.<br><em>Obsessive.</em></h1>
+    <div class="hero-meta">
+      <div>
+        <span>Who</span>
+        <p>Wassem Moarsi, baker behind Sensible Edible Bakery — NYC's largest vegan and gluten-free bakery.</p>
+      </div>
+      <div>
+        <span>What</span>
+        <p>Twenty-plus years of professional baking. Real ratios, real science, no influencer fluff.</p>
+      </div>
+      <div>
+        <span>Why</span>
+        <p>Because allergen-free shouldn't mean flavor-free. And because most of the advice online is wrong.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="hero.jpg" alt="Wassem Moarsi holding a fresh-baked brownie at Sensible Edible Bakery">
+  </div>
+</section>
+
+<section class="reels" id="reels">
+  <div class="section-label">Reels</div>
+  <h2 class="section-title">The <em>techniques</em> that matter.</h2>
+  <div class="reels-grid">
+    <div class="reel"><div class="reel-placeholder">Reel embed #1<br>(paste Instagram embed code here)</div></div>
+    <div class="reel"><div class="reel-placeholder">Reel embed #2</div></div>
+    <div class="reel"><div class="reel-placeholder">Reel embed #3</div></div>
+    <div class="reel"><div class="reel-placeholder">Reel embed #4</div></div>
+  </div>
+</section>
+
+<section class="email-section">
+  <div class="email-wrap">
+    <div class="section-label">Newsletter</div>
+    <h2 class="section-title">One email. <em>Real techniques.</em></h2>
+    <p style="max-width: 520px; font-size: 1.1rem;">Free recipes, ratios, and the stuff that actually works — straight from a 20-year bakery kitchen. No fluff, no upsell.</p>
+    <!-- Beehiiv embed: once you sign up at beehiiv.com, paste the iframe embed code from your publication's Embed Forms settings BETWEEN the <div class="beehiiv-wrap"></div> tags below. Or replace the form below with the iframe entirely. -->
+    <div class="beehiiv-wrap">
+      <form class="email-form" onsubmit="event.preventDefault(); alert('Replace this form with your Beehiiv embed iframe — grab it from beehiiv.com > your publication > Settings > Embed Forms');">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="blog-link">
+  <div class="section-label">Recipes & Guides</div>
+  <h2 class="section-title" style="margin-bottom: 2rem;">Full recipes live <em>over here.</em></h2>
+  <a href="https://sensiblebakery.com" class="big-link">sensiblebakery.com/blog</a>
+</section>
+
+<section class="press" id="press">
+  <div class="press-grid">
+    <div>
+      <div class="section-label" style="opacity: 0.6;">Press & Partnerships</div>
+      <h2 class="section-title">Media <em>kit.</em></h2>
+      <div class="press-stats">
+        <div class="stat"><div class="stat-num">XX K</div><div class="stat-label">Instagram</div></div>
+        <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Years Baking</div></div>
+        <div class="stat"><div class="stat-num">#1</div><div class="stat-label">GF/V in NYC</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Allergen-Focused</div></div>
+      </div>
+    </div>
+    <div class="press-body">
+      <p>Wassem Moarsi is a professional gluten-free and vegan baker based in Long Island City, New York. He's the owner and operator of Sensible Edible Bakery — the largest gluten-free and vegan bakery in NYC — and has spent over two decades refining commercial-grade allergen-free baking.</p>
+      <p>Available for brand partnerships, editorial features, speaking engagements, recipe development, and consulting. Full media kit with high-res photos, audience demographics, and past collaborations available on request.</p>
+      <a href="#contact" class="btn">Request Media Kit</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Let's <em>work.</em></h2>
+  <div class="contact-methods">
+    <div class="contact-card">
+      <span>Sponsorships & Press</span>
+      <a href="mailto:wassem@sensibleedibles.com">wassem@sensibleedibles.com</a>
+    </div>
+    <div class="contact-card">
+      <span>Bakery Orders</span>
+      <a href="mailto:info@sensibleedibles.com">info@sensibleedibles.com</a>
+    </div>
+    <div class="contact-card">
+      <span>Instagram</span>
+      <a href="https://instagram.com/wassembakes">@wassembakes</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-wrap">
+    <div>© 2026 Wassem Moarsi · All rights reserved</div>
+    <div><a href="https://sensiblebakery.com">Sensible Edible Bakery →</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
