@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wassem Bakes — Gluten-Free & Vegan Baking</title>
 <meta name="description" content="Professional gluten-free and vegan baking with 20+ years of experience. NYC.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia,serif' font-style='italic' font-weight='900' fill='%23FF8F1C'%3Ew%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wassem Bakes — Gluten-Free & Vegan Baking">
+<meta property="og:description" content="Twenty-plus years of professional allergen-free baking. Real ratios, real science, no fluff.">
+<meta property="og:image" content="https://wassembakes.com/hero.jpg">
+<meta property="og:url" content="https://wassembakes.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wassem Bakes — Gluten-Free & Vegan Baking">
+<meta name="twitter:description" content="Twenty-plus years of professional allergen-free baking. Real ratios, real science, no fluff.">
+<meta name="twitter:image" content="https://wassembakes.com/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
@@ -192,28 +202,59 @@
   }
   .reel {
     aspect-ratio: 9/16;
-    background: #2a2622;
+    background: linear-gradient(135deg, #2a2622, #1A1714);
     border-radius: 4px;
     overflow: hidden;
     position: relative;
     transition: transform 0.4s ease;
+    display: block;
   }
   .reel:hover { transform: translateY(-8px); }
-  .reel iframe {
+  .reel:hover .reel-play { background: var(--orange); transform: translate(-50%, -50%) scale(1.08); }
+  .reel img {
     width: 100%;
     height: 100%;
-    border: 0;
+    object-fit: cover;
+    display: block;
   }
-  .reel-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #2a2622, #1A1714);
-    color: rgba(255,255,255,0.3);
+  .reel-num {
+    position: absolute;
+    top: 1rem; left: 1rem;
     font-family: 'Fraunces', serif;
-    font-style: italic;
-    padding: 2rem;
-    text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    z-index: 2;
+  }
+  .reel-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s ease, transform 0.25s ease;
+    z-index: 2;
+  }
+  .reel-play::before {
+    content: '';
+    width: 0; height: 0;
+    border-left: 14px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 4px;
+  }
+  .reel-label {
+    position: absolute;
+    bottom: 1rem; left: 1rem; right: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    z-index: 2;
   }
 
   /* Email */
@@ -391,6 +432,7 @@
   <div class="logo">wassem bakes</div>
   <div class="nav-links">
     <a href="#reels">Work</a>
+    <a href="/blog/">Blog</a>
     <a href="#press">Press</a>
     <a href="#contact">Contact</a>
   </div>
@@ -416,7 +458,7 @@
     </div>
   </div>
   <div class="hero-photo">
-    <img src="hero.jpg" alt="Wassem Moarsi holding a fresh-baked brownie at Sensible Edible Bakery">
+    <img src="hero.jpg" alt="Wassem Moarsi holding a fresh-baked brownie at Sensible Edible Bakery" fetchpriority="high" loading="eager" decoding="async">
   </div>
 </section>
 
@@ -424,10 +466,26 @@
   <div class="section-label">Reels</div>
   <h2 class="section-title">The <em>techniques</em> that matter.</h2>
   <div class="reels-grid">
-    <div class="reel"><div class="reel-placeholder">Reel embed #1<br>(paste Instagram embed code here)</div></div>
-    <div class="reel"><div class="reel-placeholder">Reel embed #2</div></div>
-    <div class="reel"><div class="reel-placeholder">Reel embed #3</div></div>
-    <div class="reel"><div class="reel-placeholder">Reel embed #4</div></div>
+    <a class="reel" href="https://www.instagram.com/p/DWmdP-sgt-L/" target="_blank" rel="noopener" aria-label="Watch reel 1 on Instagram">
+      <span class="reel-num">01</span>
+      <span class="reel-play"></span>
+      <span class="reel-label">Watch on Instagram</span>
+    </a>
+    <a class="reel" href="https://www.instagram.com/p/DWUWFCJglJe/" target="_blank" rel="noopener" aria-label="Watch reel 2 on Instagram">
+      <span class="reel-num">02</span>
+      <span class="reel-play"></span>
+      <span class="reel-label">Watch on Instagram</span>
+    </a>
+    <a class="reel" href="https://www.instagram.com/p/DVrKPkZAuGp/" target="_blank" rel="noopener" aria-label="Watch reel 3 on Instagram">
+      <span class="reel-num">03</span>
+      <span class="reel-play"></span>
+      <span class="reel-label">Watch on Instagram</span>
+    </a>
+    <a class="reel" href="https://www.instagram.com/p/DVJz2vnj9uN/" target="_blank" rel="noopener" aria-label="Watch reel 4 on Instagram">
+      <span class="reel-num">04</span>
+      <span class="reel-play"></span>
+      <span class="reel-label">Watch on Instagram</span>
+    </a>
   </div>
 </section>
 
@@ -448,8 +506,8 @@
 
 <section class="blog-link">
   <div class="section-label">Recipes & Guides</div>
-  <h2 class="section-title" style="margin-bottom: 2rem;">Full recipes live <em>over here.</em></h2>
-  <a href="https://sensiblebakery.com" class="big-link">sensiblebakery.com/blog</a>
+  <h2 class="section-title" style="margin-bottom: 2rem;">Field notes <em>from the kitchen.</em></h2>
+  <a href="/blog/" class="big-link">Read the blog</a>
 </section>
 
 <section class="press" id="press">
@@ -458,7 +516,7 @@
       <div class="section-label" style="opacity: 0.6;">Press & Partnerships</div>
       <h2 class="section-title">Media <em>kit.</em></h2>
       <div class="press-stats">
-        <div class="stat"><div class="stat-num">XX K</div><div class="stat-label">Instagram</div></div>
+        <div class="stat"><div class="stat-num">85.3K</div><div class="stat-label">Instagram</div></div>
         <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Years Baking</div></div>
         <div class="stat"><div class="stat-num">#1</div><div class="stat-label">GF/V in NYC</div></div>
         <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Allergen-Focused</div></div>
