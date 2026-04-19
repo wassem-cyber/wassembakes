@@ -374,6 +374,14 @@ article.post {
   padding: 2rem;
   border-radius: 4px;
   margin-bottom: 2rem;
+  overflow: hidden;
+}
+.product-cta-img {
+  display: block;
+  width: calc(100% + 4rem);
+  height: 260px;
+  object-fit: cover;
+  margin: -2rem -2rem 1.5rem;
 }
 .product-cta .label {
   font-size: 0.7rem;
