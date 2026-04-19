@@ -206,11 +206,22 @@ article.post {
 .sb-latest li { border-top: 1px solid rgba(26, 23, 20, 0.12); }
 .sb-latest li:first-child { border-top: none; }
 .sb-latest a {
-  display: block;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0.9rem;
   padding: 0.85rem 0;
+  align-items: center;
   transition: padding-left 0.2s;
 }
 .sb-latest a:hover { padding-left: 0.4rem; }
+.sb-latest-img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
+}
+.sb-latest-text { min-width: 0; }
 .sb-latest-date {
   display: block;
   font-size: 0.65rem;

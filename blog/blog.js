@@ -52,8 +52,11 @@
         (p) => `
       <li>
         <a href="/blog/${p.slug}.html">
-          <span class="sb-latest-date">${p.dateDisplay}</span>
-          <span class="sb-latest-title">${p.title}</span>
+          ${p.image ? `<img class="sb-latest-img" src="/blog/images/${p.image}" alt="" loading="lazy">` : ""}
+          <div class="sb-latest-text">
+            <span class="sb-latest-date">${p.dateDisplay}</span>
+            <span class="sb-latest-title">${p.title}</span>
+          </div>
         </a>
       </li>`
       )
