@@ -1,7 +1,5 @@
 (function () {
-  // Paste the Google Apps Script web app URL here when ready.
-  // Must be deployed as "Execute as: Me, Access: Anyone".
-  const APPSCRIPT_URL = "";
+  const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyloIXcsvJwHgj689X7_QjBXwpQ5CiMLk1suHf66tRR3-SHzC399UL0ele7VbwGbZgcfQ/exec";
 
   const CURRENT_SLUG =
     document.querySelector('meta[name="post-slug"]')?.content || "";
