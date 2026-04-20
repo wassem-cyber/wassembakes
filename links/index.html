@@ -160,13 +160,37 @@
     <a class="link" href="https://instagram.com/wassembakes" target="_blank" rel="noopener">Instagram</a>
     <a class="link" href="https://www.tiktok.com/@wassembakes" target="_blank" rel="noopener">TikTok</a>
     <a class="link" href="https://www.youtube.com/@wassembakes" target="_blank" rel="noopener">YouTube</a>
-    <a class="link" href="mailto:wassem@sensibleedibles.com?subject=Press%20Kit%20Request&body=Hi%20Wassem%2C%0A%0AI'd%20like%20to%20request%20your%20press%20kit.%0A%0A">Press kit</a>
+    <a class="link" id="pressKitBtn" href="mailto:wassem@sensibleedibles.com?subject=Press%20Kit%20Request&body=Hi%20Wassem%2C%0A%0AI'd%20like%20to%20request%20your%20press%20kit.%0A%0A">Press kit</a>
   </div>
+  <div id="pressKitMsg" style="margin-top: 1rem; font-family: 'Fraunces', serif; font-style: italic; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; text-align: center;"></div>
 
   <div class="footer">
     <a href="/">wassembakes.com</a>
   </div>
 </div>
+
+<script>
+(function () {
+  const btn = document.getElementById('pressKitBtn');
+  const msg = document.getElementById('pressKitMsg');
+  if (!btn) return;
+  const EMAIL = 'wassem@sensibleedibles.com';
+  btn.addEventListener('click', function (e) {
+    // Let the default mailto fire for devices that have a mail client.
+    // Also copy the address so desktop users without a mail client can paste.
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(EMAIL).then(function () {
+        msg.textContent = 'Copied ' + EMAIL + ' to clipboard.';
+        msg.style.opacity = '1';
+        setTimeout(function () { msg.style.opacity = '0'; }, 4000);
+      });
+    } else {
+      msg.textContent = 'Email: ' + EMAIL;
+      msg.style.opacity = '1';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
