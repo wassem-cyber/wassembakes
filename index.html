@@ -494,13 +494,11 @@
     <div class="section-label">Newsletter</div>
     <h2 class="section-title">One email. <em>Real techniques.</em></h2>
     <p style="max-width: 520px; font-size: 1.1rem;">Free recipes, ratios, and the stuff that actually works — straight from a 20-year bakery kitchen. No fluff, no upsell.</p>
-    <!-- Beehiiv embed: once you sign up at beehiiv.com, paste the iframe embed code from your publication's Embed Forms settings BETWEEN the <div class="beehiiv-wrap"></div> tags below. Or replace the form below with the iframe entirely. -->
-    <div class="beehiiv-wrap">
-      <form class="email-form" onsubmit="event.preventDefault(); alert('Replace this form with your Beehiiv embed iframe — grab it from beehiiv.com > your publication > Settings > Embed Forms');">
-        <input type="email" placeholder="your@email.com" required>
-        <button type="submit">Subscribe</button>
-      </form>
-    </div>
+    <form class="email-form" id="newsletterForm">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <div id="newsletterMsg" style="margin-top: 1rem; font-family: 'Fraunces', serif; font-style: italic; font-size: 0.95rem; opacity: 0.8; min-height: 1em;"></div>
   </div>
 </section>
 
@@ -525,7 +523,7 @@
     <div class="press-body">
       <p>Wassem Moarsi is a professional gluten-free and vegan baker based in Long Island City, New York. He's the owner and operator of Sensible Edible Bakery — the largest gluten-free and vegan bakery in NYC — and has spent over two decades refining commercial-grade allergen-free baking.</p>
       <p>Available for brand partnerships, editorial features, speaking engagements, recipe development, and consulting. Full media kit with high-res photos, audience demographics, and past collaborations available on request.</p>
-      <a href="#contact" class="btn">Request Media Kit</a>
+      <a href="mailto:wassem@sensibleedibles.com?subject=Media%20Kit%20Request&body=Hi%20Wassem%2C%0A%0AI'd%20like%20to%20request%20your%20full%20media%20kit.%0A%0A" class="btn">Request Media Kit</a>
     </div>
   </div>
 </section>
@@ -556,5 +554,29 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyloIXcsvJwHgj689X7_QjBXwpQ5CiMLk1suHf66tRR3-SHzC399UL0ele7VbwGbZgcfQ/exec";
+  const form = document.getElementById('newsletterForm');
+  const msg = document.getElementById('newsletterMsg');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = form.querySelector('input[type="email"]').value;
+    msg.textContent = "Signing you up…";
+    fetch(APPSCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email=' + encodeURIComponent(email) + '&source=wassembakes.com'
+    }).then(function () {
+      msg.textContent = "Thanks — you're in.";
+      form.reset();
+    }).catch(function () {
+      msg.textContent = "Something went wrong. Try again.";
+    });
+  });
+})();
+</script>
 </body>
 </html>
