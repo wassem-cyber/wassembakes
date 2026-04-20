@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wassem Bakes — Links</title>
+<meta name="description" content="Shop, read, subscribe. All of Wassem Moarsi's links in one place.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia,serif' font-style='italic' font-weight='900' fill='%23FF8F1C'%3Ew%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wassem Bakes — Links">
+<meta property="og:description" content="Shop, read, subscribe. All of Wassem Moarsi's links in one place.">
+<meta property="og:image" content="https://wassembakes.com/hero.jpg">
+<meta property="og:url" content="https://wassembakes.com/links/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://wassembakes.com/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,900;1,9..144,300&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF8F1C;
+    --blue: #8DB9CA;
+    --yellow: #FFD451;
+    --cream: #F5EFE4;
+    --ink: #1A1714;
+    --paper: #FAFAF7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.25rem 2rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%; right: -30%;
+    width: 80vw; height: 80vw;
+    background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+    opacity: 0.18;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 20px 40px -15px rgba(26, 23, 20, 0.3);
+    margin-bottom: 1.25rem;
+  }
+  .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 2rem;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .handle {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    opacity: 0.55;
+    margin-bottom: 0.75rem;
+  }
+  .tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 340px;
+    opacity: 0.8;
+    margin-bottom: 2.5rem;
+  }
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.15rem 1.5rem;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px -6px rgba(26, 23, 20, 0.15);
+    position: relative;
+  }
+  .link:hover, .link:active {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -10px rgba(26, 23, 20, 0.4);
+  }
+  .link.primary {
+    background: var(--orange);
+    color: var(--paper);
+    border-color: var(--orange);
+  }
+  .link.primary:hover, .link.primary:active {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .footer {
+    margin-top: 3rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.4;
+    text-align: center;
+  }
+  .footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(26,23,20,0.2); }
+  @media (max-width: 480px) {
+    .name { font-size: 1.75rem; }
+    .avatar { width: 100px; height: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <img class="avatar" src="/hero.jpg" alt="Wassem Moarsi">
+  <div class="name">Wassem Bakes</div>
+  <div class="handle">@wassembakes</div>
+  <p class="tagline">Gluten-free &amp; vegan baker. 20+ years, NYC. Real ratios, real science, no fluff.</p>
+
+  <div class="links">
+    <a class="link primary" href="https://sensibleedibles.com" target="_blank" rel="noopener">Shop Sensible Edibles</a>
+    <a class="link" href="https://wassembakes.com/blog/" target="_blank" rel="noopener">Read the blog</a>
+    <a class="link" href="https://wassembakes.beehiiv.com/subscribe" target="_blank" rel="noopener">Subscribe to the newsletter</a>
+    <a class="link" href="https://instagram.com/wassembakes" target="_blank" rel="noopener">Follow on Instagram</a>
+    <a class="link" href="mailto:wassem@sensibleedibles.com">Press &amp; partnerships</a>
+  </div>
+
+  <div class="footer">
+    <a href="/">wassembakes.com</a>
+  </div>
+</div>
+
+</body>
+</html>
