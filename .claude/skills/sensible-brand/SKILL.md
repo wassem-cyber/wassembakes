@@ -20,8 +20,33 @@ Keep them distinct but visually and tonally adjacent. The business carries the l
 - Address: **30-30 47th Ave, Long Island City, NY**
 - **FDA registered**
 - **FSMA compliant** (Food Safety Modernization Act)
+- **100% gluten-free, peanut-free, wheat-free, sesame-free kitchen** — no shared equipment, no cross-contact risk
+- **Wassem Moarsi, CEO** — founder and head baker
 
-Use these facts verbatim when accuracy matters (labels, wholesale decks, compliance-sensitive pages, retailer onboarding). Don't paraphrase regulatory claims.
+Use these facts verbatim when accuracy matters (labels, wholesale decks, compliance-sensitive pages, retailer onboarding). Don't paraphrase regulatory or allergen claims.
+
+## Wassem's background
+
+Use this to anchor the "authoritative, real-science" voice — reference when a post benefits from credibility context, but don't shoehorn it in.
+
+- **BS in Biology** and **MS in Biology**
+- **20+ years** of professional baking
+- Owner and operator of Sensible Edible Bakery — the largest gluten-free and vegan bakery in NYC
+- Grounds the creator brand's pitch: when Wassem talks ratios, extraction, gluten development, fermentation, the blood-sugar impact of ingredient choices — it's informed by actual biochemistry, not internet folklore
+
+Good use: "I studied biology — here's what's actually happening to the starches when you let the dough rest."
+Bad use: "Wassem Moarsi, a trained biologist, brings scientific expertise to baking." (that's marketing-speak)
+
+## Bakery mission & values
+
+Use as source material when writing About-page content, brand decks, or wholesale pitches. Paraphrase lightly — these are first-person values, not boilerplate.
+
+- **Mission statement (use verbatim when needed):** "Food should nourish the body, respect animals, and protect the planet."
+- **Product philosophy:** real, nutrient-dense ingredients. Pair protein + fiber in nearly every product to blunt glucose spikes. Moderate sugar. Healthy organic fats. Antioxidants where they fit naturally.
+- **Sustainability:** composts on-site; avoids harsh chemicals and unnecessary preservatives; a portion of proceeds supports animal rescue, hunger relief, and environmental restoration.
+- **Education posture:** mentors interns, shares baking science openly (blog, social, in-kitchen). Not gatekeeping.
+
+When pitching Sensible on the creator brand (wassembakes), these values justify the shop link — it's not just commerce, it's the same philosophy Wassem talks about in his content.
 
 ## Brand colors
 
