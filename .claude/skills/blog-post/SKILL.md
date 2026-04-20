@@ -113,7 +113,6 @@ Copy exactly. Replace `{{placeholders}}`. Keep every class, attribute, and wrapp
 </footer>
 
 <script src="blog.js" defer></script>
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a83fda603b154d69ab1965b5f8087a26"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
 ```
