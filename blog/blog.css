@@ -22,19 +22,27 @@ nav {
   padding: 1.5rem 2rem;
   display: flex; justify-content: space-between; align-items: center;
   z-index: 100;
-  mix-blend-mode: difference;
-  color: white;
+  background: var(--yellow);
+  color: var(--ink);
 }
 .logo {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-weight: 900;
   font-size: 1.25rem;
   letter-spacing: -0.02em;
   font-style: italic;
 }
-.nav-links { display: flex; gap: 2rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; }
-.nav-links a { opacity: 0.8; transition: opacity 0.2s; }
-.nav-links a:hover { opacity: 1; }
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.nav-links a { opacity: 0.85; transition: opacity 0.2s; }
+.nav-links a:hover,
+.nav-links a[aria-current="page"] { opacity: 1; }
 
 .blog-header {
   padding: 10rem 2rem 4rem;
@@ -49,7 +57,7 @@ nav {
   margin-bottom: 1rem;
 }
 .blog-header h1 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 900;
   line-height: 0.9;
@@ -58,12 +66,11 @@ nav {
 }
 .blog-header h1 em { font-style: italic; font-weight: 300; color: var(--orange); }
 .blog-header .tagline {
-  font-family: 'Fraunces', serif;
+  font-family: "bettoni-variable", 'Fraunces', serif;
+  font-variation-settings: "opsz" 40, "wght" 110;
   font-size: 1.3rem;
-  font-weight: 300;
-  font-style: italic;
   max-width: 600px;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .posts {
@@ -79,17 +86,32 @@ nav {
 }
 .post-card:last-child { border-bottom: 1px solid var(--ink); }
 .post-card:hover { padding-left: 1rem; }
-.post-card a { display: grid; grid-template-columns: 180px 1fr; gap: 3rem; align-items: baseline; }
+.post-card a { display: grid; grid-template-columns: 260px 1fr; gap: 2.5rem; align-items: center; }
+.post-card-image {
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--cream);
+}
+.post-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.post-card:hover .post-card-image img { transform: scale(1.04); }
 .post-card-date {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   opacity: 0.6;
+  margin-bottom: 0.75rem;
 }
 .post-card h2 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: clamp(1.5rem, 3vw, 2.25rem);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin-bottom: 0.75rem;
@@ -106,15 +128,17 @@ nav {
   border-bottom: 1px solid var(--ink);
   padding: 5rem 0;
   text-align: center;
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-style: italic;
   font-size: 1.5rem;
   opacity: 0.5;
 }
 @media (max-width: 700px) {
-  .post-card a { grid-template-columns: 1fr; gap: 0.5rem; }
-  nav { padding: 1rem 1.25rem; }
-  .nav-links { gap: 1rem; font-size: 0.7rem; }
+  .post-card a { grid-template-columns: 1fr; gap: 1.25rem; }
+  .post-card-image { aspect-ratio: 16/9; }
+  nav { padding: 0.75rem 1rem; }
+  .logo { font-size: 1rem; }
+  .nav-links { gap: 0.75rem; font-size: 0.6rem; letter-spacing: 0.1em; }
   .blog-header { padding: 7rem 1.25rem 3rem; }
   .posts { padding: 0 1.25rem 4rem; }
 }
@@ -153,7 +177,7 @@ article.post {
   margin-bottom: 1rem;
 }
 .sb-newsletter h4 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 1.3rem;
   font-weight: 400;
   line-height: 1.2;
@@ -231,7 +255,7 @@ article.post {
   margin-bottom: 0.3rem;
 }
 .sb-latest-title {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.3;
@@ -241,7 +265,7 @@ article.post {
   overflow: hidden;
 }
 .sb-product h4 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 1.2rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
@@ -284,7 +308,7 @@ article.post {
   margin-bottom: 1.25rem;
 }
 .post h1 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   font-weight: 900;
   line-height: 1;
@@ -292,7 +316,7 @@ article.post {
   margin-bottom: 1.5rem;
 }
 .post .excerpt {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 1.35rem;
   font-weight: 300;
   font-style: italic;
@@ -310,14 +334,14 @@ article.post {
 .post-body { font-size: 1.1rem; }
 .post-body p { margin-bottom: 1.5rem; }
 .post-body h2 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 2rem;
   font-weight: 400;
   margin: 3rem 0 1rem;
   letter-spacing: -0.02em;
 }
 .post-body h3 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 1.4rem;
   font-weight: 600;
   margin: 2.25rem 0 0.75rem;
@@ -328,7 +352,7 @@ article.post {
   border-left: 3px solid var(--orange);
   padding: 0.5rem 0 0.5rem 1.5rem;
   margin: 2rem 0;
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-style: italic;
   font-size: 1.25rem;
   opacity: 0.85;
@@ -391,7 +415,7 @@ article.post {
   margin-bottom: 0.5rem;
 }
 .product-cta h3 {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
@@ -415,7 +439,7 @@ article.post {
   padding: 3rem 0 1rem;
 }
 .subscribe-cta p {
-  font-family: 'Fraunces', serif;
+  font-family: "ivybodoni", 'Fraunces', serif;
   font-style: italic;
   font-size: 1.2rem;
   margin-bottom: 1rem;

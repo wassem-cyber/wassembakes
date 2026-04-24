@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Wassem Bakes</title>
+<meta name="description" content="About Wassem Moarsi — 20+ years of professional gluten-free and vegan baking in NYC.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia,serif' font-style='italic' font-weight='900' fill='%23FF8F1C'%3Ew%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About — Wassem Bakes">
+<meta property="og:description" content="About Wassem Moarsi — 20+ years of professional gluten-free and vegan baking in NYC.">
+<meta property="og:image" content="https://wassembakes.com/about.jpg">
+<meta property="og:url" content="https://wassembakes.com/about/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/vqu6uma.css">
+<style>
+  :root {
+    --orange: #FF8F1C;
+    --blue: #8DB9CA;
+    --yellow: #FFD451;
+    --cream: #F5EFE4;
+    --ink: #1A1714;
+    --paper: #FAFAF7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 1.5rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    background: var(--yellow);
+    color: var(--ink);
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .nav-links a { opacity: 0.85; transition: opacity 0.2s; }
+  .nav-links a:hover,
+  .nav-links a[aria-current="page"] { opacity: 1; }
+
+  /* Section base */
+  section { padding: 6rem 2rem; position: relative; }
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+  .page-title {
+    font-family: "ivybodoni", 'Fraunces', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+  .page-title em { font-style: italic; font-weight: 300; color: var(--orange); }
+
+  /* About hero */
+  .about-hero {
+    padding-top: 10rem;
+    padding-bottom: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-hero-lead {
+    font-family: "bettoni-variable", 'Fraunces', serif;
+    font-variation-settings: "opsz" 40, "wght" 110;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.4;
+    max-width: 90ch;
+    opacity: 0.85;
+  }
+
+  /* About body */
+  .about-body { padding-top: 2rem; padding-bottom: 6rem; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .about-photo-wrap {
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: var(--cream);
+  }
+  .about-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .about-prose p {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 56ch;
+    margin-bottom: 1.25rem;
+  }
+  .about-prose p:last-child { margin-bottom: 0; }
+
+  /* Back link */
+  .back-link-wrap { max-width: 1200px; margin: 3rem auto 0; }
+  .back-link {
+    display: inline-block;
+    padding: 1rem 1.75rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    border-radius: 6px;
+    transition: background 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .back-link:hover { background: var(--orange); transform: scale(1.03); box-shadow: 0 8px 18px -10px rgba(26, 23, 20, 0.3); }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 2rem 2rem;
+    font-size: 0.85rem;
+  }
+  .footer-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .footer-wrap a { opacity: 0.6; transition: opacity 0.2s; }
+  .footer-wrap a:hover { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-photo-wrap { aspect-ratio: 1/1; max-width: 500px; }
+  }
+  @media (max-width: 700px) {
+    nav { padding: 0.75rem 1rem; }
+    .logo { font-size: 1rem; }
+    .nav-links { gap: 0.75rem; font-size: 0.6rem; letter-spacing: 0.1em; }
+    section { padding: 4rem 1.25rem; }
+    .about-hero { padding-top: 7rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="../index.html">wassem bakes</a></div>
+  <div class="nav-links">
+    <a href="../blog/index.html">Blog</a>
+    <a href="https://sensibleedibles.com/collections/all" target="_blank" rel="noopener">Shop</a>
+    <a href="../index.html#reels">Videos</a>
+    <a href="index.html" aria-current="page">About</a>
+    <a href="../index.html#press">Connect</a>
+  </div>
+</nav>
+
+<section class="about-hero">
+  <div class="section-label">About</div>
+  <h1 class="page-title">Meet <em>Wassem.</em></h1>
+  <p class="about-hero-lead">If you're looking for sustainable, health-focused, allergy-friendly baking, you're in the right place.</p>
+</section>
+
+<section class="about-body">
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <img src="../about.jpg" alt="Wassem Moarsi in the bakery" loading="eager" decoding="async">
+    </div>
+    <div class="about-prose">
+      <p>For over 20 years I've been the owner of <a href="https://sensibleedibles.com" target="_blank" rel="noopener" style="border-bottom: 1px solid currentColor;">Sensible Edibles Bakery</a>, the largest gluten-free and vegan bakery in NYC. I set out to prove that my bakery can prioritize dietary restrictions, health, and environmental impact without compromising flavor or texture, and with my background in biology and baking expertise I've been able to do just that.</p>
+      <p>Now I'm here to share what I've learned — and am still learning — through the past 20 plus years with you. You'll find recipes, professional level kitchen tips and tricks, and an honest behind the scenes look at what running a real bakery kitchen looks like.</p>
+      <p>No frills, no elitism, no gatekeeping — whether you're running your own bakery or starting your baking journey today, welcome!</p>
+    </div>
+  </div>
+  <div class="back-link-wrap">
+    <a href="../index.html" class="back-link">← Back to home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-wrap">
+    <div>© 2026 Wassem Moarsi · All rights reserved</div>
+    <div><a href="https://sensiblebakery.com">Sensible Edible Bakery →</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

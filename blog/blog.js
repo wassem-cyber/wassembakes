@@ -6,7 +6,7 @@
 
   async function loadPosts() {
     try {
-      const res = await fetch("/blog/posts.json", { cache: "no-cache" });
+      const res = await fetch("posts.json", { cache: "no-cache" });
       if (!res.ok) throw new Error("fetch failed");
       const posts = await res.json();
       return posts.sort((a, b) => b.date.localeCompare(a.date));
@@ -27,9 +27,10 @@
       .map(
         (p) => `
       <li class="post-card">
-        <a href="/blog/${p.slug}.html">
-          <div class="post-card-date">${p.dateDisplay}</div>
-          <div>
+        <a href="${p.slug}.html">
+          <div class="post-card-image">${p.image ? `<img src="images/${p.image}" alt="" loading="lazy" decoding="async">` : ""}</div>
+          <div class="post-card-content">
+            <div class="post-card-date">${p.dateDisplay}</div>
             <h2>${p.title}</h2>
             <p class="post-card-excerpt">${p.excerpt}</p>
           </div>
@@ -51,8 +52,8 @@
       .map(
         (p) => `
       <li>
-        <a href="/blog/${p.slug}.html">
-          ${p.image ? `<img class="sb-latest-img" src="/blog/images/${p.image}" alt="" loading="lazy">` : ""}
+        <a href="${p.slug}.html">
+          ${p.image ? `<img class="sb-latest-img" src="images/${p.image}" alt="" loading="lazy">` : ""}
           <div class="sb-latest-text">
             <span class="sb-latest-date">${p.dateDisplay}</span>
             <span class="sb-latest-title">${p.title}</span>

@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/vqu6uma.css">
 <style>
   :root {
     --orange: #FF8F1C;
@@ -58,6 +59,7 @@
     display: flex;
     gap: 2rem;
     font-size: 0.85rem;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.15em;
   }
@@ -91,7 +93,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(250, 250, 247, 0.88), rgba(250, 250, 247, 0.3) 55%, transparent 85%);
+    background: linear-gradient(to right, rgba(26, 23, 20, 0.88), rgba(26, 23, 20, 0.3) 55%, transparent 85%);
     z-index: 1;
     pointer-events: none;
   }
@@ -122,7 +124,7 @@
   }
   @media (max-width: 900px) {
     .hero::after {
-      background: linear-gradient(to right, rgba(250, 250, 247, 0.9), rgba(250, 250, 247, 0.7));
+      background: linear-gradient(to right, rgba(26, 23, 20, 0.9), rgba(26, 23, 20, 0.7));
     }
   }
   .hero-label {
@@ -134,12 +136,13 @@
     animation: fadeUp 0.8s 0.2s both;
   }
   .hero h1 {
-    font-family: 'Fraunces', serif;
+    font-family: "ivybodoni", 'Fraunces', serif;
     font-size: clamp(3.5rem, 11vw, 10rem);
-    font-weight: 900;
+    font-weight: 700;
     line-height: 0.88;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
     margin-bottom: 2rem;
+    color: var(--paper);
     animation: fadeUp 0.8s 0.4s both;
   }
   .hero h1 em {
@@ -150,17 +153,19 @@
   .hero-cta-wrap {
     max-width: 900px;
     padding-top: 2rem;
-    border-top: 1px solid var(--ink);
+    border-top: 1px solid var(--paper);
     animation: fadeUp 0.8s 0.6s both;
   }
   .hero-cta {
     display: inline-block;
     padding: 1rem 1.5rem 1rem 2.5rem;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--paper);
+    color: var(--ink);
     font-size: 0.85rem;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
+    border-radius: 6px;
     transition: background 0.2s, color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
   }
   .hero-cta-arrow {
@@ -203,9 +208,9 @@
     margin-bottom: 1rem;
   }
   .section-title {
-    font-family: 'Fraunces', serif;
+    font-family: "ivybodoni", 'Fraunces', serif;
     font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 300;
+    font-weight: 600;
     line-height: 0.95;
     letter-spacing: -0.03em;
     margin-bottom: 3rem;
@@ -254,7 +259,7 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 64px; height: 64px;
+    width: 48px; height: 48px;
     border-radius: 50%;
     background: rgba(255,255,255,0.15);
     backdrop-filter: blur(8px);
@@ -265,19 +270,20 @@
   .reel-play::before {
     content: '';
     width: 0; height: 0;
-    border-left: 14px solid white;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    margin-left: 4px;
+    border-left: 11px solid white;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    margin-left: 3px;
   }
   .reel-label {
     position: absolute;
-    bottom: 1rem; left: 1rem; right: 1rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    bottom: 1rem;
+    left: 1rem;
+    width: 1.25rem;
+    height: 1.25rem;
     color: var(--paper);
-    opacity: 0.85;
+    fill: currentColor;
+    opacity: 0.8;
     z-index: 2;
   }
   .social-row {
@@ -352,24 +358,143 @@
     border: none;
     font-family: inherit;
     font-size: 0.8rem;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
+    border-radius: 6px;
     cursor: pointer;
     transition: background 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
   }
   .email-form button:hover { background: var(--orange); transform: scale(1.03); box-shadow: 0 8px 18px -10px rgba(26, 23, 20, 0.2); }
 
   /* Blog link */
-  .blog-link { background: var(--paper); }
+  .blog-link, .shop-link { background: var(--paper); }
+
+  /* Shop hero */
+  .shop-hero {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    aspect-ratio: 3/1;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .shop-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .shop-hero-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 2rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .shop-hero-btn:hover {
+    background: var(--orange);
+    color: var(--paper);
+    transform: translate(-50%, -50%) scale(1.03);
+    box-shadow: 0 8px 18px -10px rgba(26, 23, 20, 0.3);
+  }
+  @media (max-width: 700px) {
+    .shop-hero-btn { padding: 0.75rem 1.25rem; font-size: 0.65rem; letter-spacing: 0.15em; }
+  }
+
+  /* Shop carousel */
+  .shop-carousel {
+    overflow: hidden;
+    margin-top: 2rem;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+  .shop-track {
+    display: flex;
+    width: max-content;
+    animation: shop-scroll 45s linear infinite;
+  }
+  .shop-carousel:hover .shop-track { animation-play-state: paused; }
+  .shop-item {
+    flex: 0 0 280px;
+    aspect-ratio: 3/4;
+    margin-right: 1.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  .shop-item:hover { transform: translateY(-6px); }
+  .shop-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .shop-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .shop-item:hover::after { background: rgba(0,0,0,0.5); }
+  .shop-caption {
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    color: var(--paper);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .shop-item:hover .shop-caption { opacity: 1; transform: translateY(0); }
+  .shop-caption-name {
+    display: block;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  .shop-caption-price {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.85;
+  }
+  @keyframes shop-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (max-width: 700px) {
+    .shop-item { flex-basis: 220px; margin-right: 1rem; }
+  }
   .big-link {
     display: block;
     padding: 3rem 0;
     border-top: 1px solid var(--ink);
     border-bottom: 1px solid var(--ink);
-    font-family: 'Fraunces', serif;
+    font-family: "bettoni-variable", 'Fraunces', serif;
+    font-variation-settings: "opsz" 40, "wght" 110;
     font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 300;
-    font-style: italic;
     transition: padding-left 0.4s ease, color 0.3s;
     position: relative;
   }
@@ -404,17 +529,17 @@
     border-radius: 4px;
   }
   .about-text h2 {
-    font-family: 'Fraunces', serif;
+    font-family: "ivybodoni", 'Fraunces', serif;
     font-size: clamp(2.25rem, 5vw, 3.75rem);
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1;
     letter-spacing: -0.02em;
     margin-bottom: 1.5rem;
   }
   .about-text h2 em { font-style: italic; color: var(--orange); }
   .about-text p {
-    font-family: 'Fraunces', serif;
-    font-size: 1.25rem;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 1.1rem;
     line-height: 1.5;
     max-width: 52ch;
   }
@@ -432,7 +557,7 @@
   }
   @media (max-width: 900px) {
     .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .about-photo { aspect-ratio: 3/2; }
+    .about-photo { aspect-ratio: 1/1; }
     .about-text { padding: 2rem; }
   }
 
@@ -454,9 +579,9 @@
     border-top: 1px solid rgba(255,255,255,0.2);
   }
   .stat-num {
-    font-family: 'Fraunces', serif;
+    font-family: "bettoni-variable", 'Fraunces', serif;
+    font-variation-settings: "opsz" 40, "wght" 110;
     font-size: 3rem;
-    font-weight: 300;
     color: var(--yellow);
     line-height: 1;
     margin-bottom: 0.5rem;
@@ -476,8 +601,10 @@
     background: var(--yellow);
     color: var(--ink);
     font-size: 0.8rem;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
+    border-radius: 6px;
     transition: background 0.2s, color 0.2s, transform 0.2s ease;
   }
   .press-body a.btn:hover { background: var(--orange); color: var(--paper); transform: scale(1.03); }
@@ -526,9 +653,9 @@
     margin-bottom: 0.5rem;
   }
   .contact-card a {
-    font-family: 'Fraunces', serif;
+    font-family: "bettoni-variable", 'Fraunces', serif;
+    font-variation-settings: "opsz" 40, "wght" 110;
     font-size: 1rem;
-    font-weight: 400;
     word-break: break-word;
     border-bottom: 1px solid transparent;
     transition: border-color 0.2s;
@@ -554,8 +681,9 @@
   .footer-wrap a:hover { opacity: 1; }
 
   @media (max-width: 700px) {
-    nav { padding: 1rem 1.25rem; }
-    .nav-links { gap: 1rem; font-size: 0.7rem; }
+    nav { padding: 0.75rem 1rem; }
+    .logo { font-size: 1rem; }
+    .nav-links { gap: 0.75rem; font-size: 0.6rem; letter-spacing: 0.1em; }
     section { padding: 4rem 1.25rem; }
     .hero { padding: 6rem 1.25rem 3rem; }
     .press-grid { grid-template-columns: 1fr; }
@@ -569,11 +697,11 @@
 <nav>
   <div class="logo">wassem bakes</div>
   <div class="nav-links">
-    <a href="#reels">Videos</a>
-    <a href="/blog/">Blog</a>
+    <a href="blog/index.html">Blog</a>
     <a href="https://sensibleedibles.com/collections/all" target="_blank" rel="noopener">Shop</a>
-    <a href="#press">Press</a>
-    <a href="#contact">Contact</a>
+    <a href="#reels">Videos</a>
+    <a href="about/index.html">About</a>
+    <a href="#press">Connect</a>
   </div>
 </nav>
 
@@ -582,7 +710,7 @@
     <div class="hero-label">Est. 2003 · New York</div>
     <h1>Gluten-<br>free.<br>Vegan.<br><em>Obsessive.</em></h1>
     <div class="hero-cta-wrap">
-      <a href="https://wassembakes.com/blog/" class="hero-cta">Let's go<svg class="hero-cta-arrow" viewBox="0 0 72 10" aria-hidden="true"><path d="M0 5 L66 5 M60 1 L66 5 L60 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="blog/index.html" class="hero-cta">Let's go<svg class="hero-cta-arrow" viewBox="0 0 72 10" aria-hidden="true"><path d="M0 5 L66 5 M60 1 L66 5 L60 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
   <div class="hero-photo">
@@ -609,6 +737,32 @@
   </div>
 </section>
 
+<section class="shop-link reveal" id="shop">
+  <div class="section-label stagger-item">Shop</div>
+  <h2 class="section-title stagger-item" style="margin-bottom: 1.5rem;">Sensible <em>Bakery.</em></h2>
+  <div class="shop-hero stagger-item">
+    <img src="shop/chocolate%20chip.jpg" alt="Chocolate chip cookies from Sensible Edible Bakery" loading="lazy" decoding="async">
+    <a class="shop-hero-btn" href="https://sensibleedibles.com/collections/all" target="_blank" rel="noopener">Shop vegan &amp; gluten-free treats</a>
+  </div>
+  <p class="stagger-item" style="max-width: 900px; margin: 0 auto; font-size: 1.5rem; text-align: center; font-family: 'bettoni-variable', 'Fraunces', serif; font-variation-settings: 'opsz' 40, 'wght' 110;">Vegan and gluten-free baked goods made with wholesome, sustainable ingredients. Shipping nationwide.</p>
+  <div class="shop-carousel stagger-item">
+    <div class="shop-track">
+      <a class="shop-item" href="https://sensibleedibles.com/products/cookies-and-cream-cake" target="_blank" rel="noopener"><img src="shop/cookies%20n%20cream.jpg" alt="Cookies and Cream Cake" loading="lazy" decoding="async"><div class="shop-caption"><span class="shop-caption-name">Cookies and Cream Cake</span><span class="shop-caption-price">$89.00</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/blueberry-rosemary-scone" target="_blank" rel="noopener"><img src="shop/blueberry%20lemon.jpg" alt="Blueberry Lemon Scone" loading="lazy" decoding="async"><div class="shop-caption"><span class="shop-caption-name">Blueberry Lemon Scone</span><span class="shop-caption-price">$4.99</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/lemon-matcha-loaf" target="_blank" rel="noopener"><img src="shop/matcha.jpg" alt="Lemon Matcha Loaf" loading="lazy" decoding="async"><div class="shop-caption"><span class="shop-caption-name">Lemon Matcha Loaf</span><span class="shop-caption-price">$49.00</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/chocolate-chunk-brownie" target="_blank" rel="noopener"><img src="shop/brownie.jpg" alt="Chocolate Chunk Brownie" loading="lazy" decoding="async"><div class="shop-caption"><span class="shop-caption-name">Chocolate Chunk Brownie</span><span class="shop-caption-price">$5.35</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/sourdough-cinnamon-rolls" target="_blank" rel="noopener"><img src="shop/cinnamon%20roll.jpg" alt="Sourdough Cinnamon Rolls" loading="lazy" decoding="async"><div class="shop-caption"><span class="shop-caption-name">Sourdough Cinnamon Rolls</span><span class="shop-caption-price">$60.00</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/chocolate-chia" target="_blank" rel="noopener"><img src="shop/chocolate%20chia.jpg" alt="Chocolate Chia Cookie" loading="lazy" decoding="async"><div class="shop-caption"><span class="shop-caption-name">Chocolate Chia Cookie</span><span class="shop-caption-price">$5.25</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/cookies-and-cream-cake" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="shop/cookies%20n%20cream.jpg" alt="" loading="lazy" decoding="async"><div class="shop-caption" aria-hidden="true"><span class="shop-caption-name">Cookies and Cream Cake</span><span class="shop-caption-price">$89.00</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/blueberry-rosemary-scone" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="shop/blueberry%20lemon.jpg" alt="" loading="lazy" decoding="async"><div class="shop-caption" aria-hidden="true"><span class="shop-caption-name">Blueberry Lemon Scone</span><span class="shop-caption-price">$4.99</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/lemon-matcha-loaf" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="shop/matcha.jpg" alt="" loading="lazy" decoding="async"><div class="shop-caption" aria-hidden="true"><span class="shop-caption-name">Lemon Matcha Loaf</span><span class="shop-caption-price">$49.00</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/chocolate-chunk-brownie" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="shop/brownie.jpg" alt="" loading="lazy" decoding="async"><div class="shop-caption" aria-hidden="true"><span class="shop-caption-name">Chocolate Chunk Brownie</span><span class="shop-caption-price">$5.35</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/sourdough-cinnamon-rolls" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="shop/cinnamon%20roll.jpg" alt="" loading="lazy" decoding="async"><div class="shop-caption" aria-hidden="true"><span class="shop-caption-name">Sourdough Cinnamon Rolls</span><span class="shop-caption-price">$60.00</span></div></a>
+      <a class="shop-item" href="https://sensibleedibles.com/products/chocolate-chia" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="shop/chocolate%20chia.jpg" alt="" loading="lazy" decoding="async"><div class="shop-caption" aria-hidden="true"><span class="shop-caption-name">Chocolate Chia Cookie</span><span class="shop-caption-price">$5.25</span></div></a>
+    </div>
+  </div>
+</section>
+
 <section class="reels reveal" id="reels">
   <div class="section-label stagger-item">Videos</div>
   <h2 class="section-title stagger-item">The <em>techniques</em> that matter.</h2>
@@ -627,22 +781,22 @@
     <a class="reel" href="https://www.instagram.com/p/DWmdP-sgt-L/" target="_blank" rel="noopener" aria-label="Watch reel 1 on Instagram">
       <img src="blog/images/kombucha-Cover.jpg" alt="" loading="lazy" decoding="async">
       <span class="reel-play"></span>
-      <span class="reel-label">Watch on Instagram</span>
+      <svg class="reel-label" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     </a>
     <a class="reel" href="https://www.instagram.com/p/DWUWFCJglJe/" target="_blank" rel="noopener" aria-label="Watch reel 2 on Instagram">
       <img src="blog/images/vinegar-Cover.jpg" alt="" loading="lazy" decoding="async">
       <span class="reel-play"></span>
-      <span class="reel-label">Watch on Instagram</span>
+      <svg class="reel-label" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     </a>
     <a class="reel" href="https://www.instagram.com/p/DVrKPkZAuGp/" target="_blank" rel="noopener" aria-label="Watch reel 3 on Instagram">
       <img src="blog/images/eggwash%20replacements-Cover.jpg" alt="" loading="lazy" decoding="async">
       <span class="reel-play"></span>
-      <span class="reel-label">Watch on Instagram</span>
+      <svg class="reel-label" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     </a>
     <a class="reel" href="https://www.instagram.com/p/DVJz2vnj9uN/" target="_blank" rel="noopener" aria-label="Watch reel 4 on Instagram">
       <img src="blog/images/choc%20chip%20cookie-Cover.jpg" alt="" loading="lazy" decoding="async">
       <span class="reel-play"></span>
-      <span class="reel-label">Watch on Instagram</span>
+      <svg class="reel-label" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     </a>
   </div>
 </section>
@@ -666,7 +820,7 @@
       <div class="section-label stagger-item" style="opacity: 0.6;">Press & Partnerships</div>
       <h2 class="section-title stagger-item"><em>Work</em> with me.</h2>
       <div class="press-stats stagger-item">
-        <div class="stat"><div class="stat-num">86.1K</div><div class="stat-label">Instagram</div></div>
+        <div class="stat"><div class="stat-num">85.3K</div><div class="stat-label">Instagram</div></div>
         <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Years Baking</div></div>
         <div class="stat"><div class="stat-num">#1</div><div class="stat-label">GF/V in NYC</div></div>
         <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Allergen-Focused</div></div>
