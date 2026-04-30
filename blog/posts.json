@@ -1,11 +1,75 @@
 [
   {
+    "slug": "protein-packed-rice-krispie-treats",
+    "title": "Protein Packed Rice Krispie Treats",
+    "excerpt": "Take a bite of my healthy take on the classic rice krispy treat - date-sweetened, protein-packed, and built to fuel you.",
+    "date": "2025-11-11",
+    "dateDisplay": "November 11, 2025",
+    "image": "rkt-hero.jpg",
+    "tags": ["Recipes", "Health & Wellness"]
+  },
+  {
+    "slug": "essential-egg-replacements-for-vegan-baking",
+    "title": "Essential Egg Replacements for Vegan Baking",
+    "excerpt": "Eggs do three jobs in baking - binding, moisture, and leavening. The key to veganizing a recipe is knowing what you're replacing.",
+    "date": "2025-11-05",
+    "dateDisplay": "November 5, 2025",
+    "image": "eggs.jpg",
+    "tags": ["Baking Tips", "Vegan"]
+  },
+  {
+    "slug": "gut-healthy-postbiotics-with-fermented-beets",
+    "title": "Gut-Healthy Postbiotics With Fermented Beets",
+    "excerpt": "Learn what ferments can do for your gut, plus an easy beet recipe to get started.",
+    "date": "2025-10-08",
+    "dateDisplay": "October 8, 2025",
+    "image": "beets-pattern.jpg",
+    "tags": ["Recipes", "Health & Wellness"]
+  },
+  {
+    "slug": "starter-guide-to-gluten-free-flours",
+    "title": "Starter Guide to Gluten-Free Flours",
+    "excerpt": "Gluten-free flours aren't one-to-one swaps for wheat. A starter guide to the flours we use most — what each does, when to reach for it, and a sample blend to get you started.",
+    "date": "2025-10-01",
+    "dateDisplay": "October 1, 2025",
+    "image": "grains.jpg",
+    "tags": ["Baking Tips", "Gluten-Free"]
+  },
+  {
+    "slug": "binders-for-better-gluten-free-baking",
+    "title": "Binders For Better Gluten-Free Baking",
+    "excerpt": "If you're baking without gluten, adding binders is essential. We're taking you through what they all do and when and how to use each.",
+    "date": "2025-09-24",
+    "dateDisplay": "September 24, 2025",
+    "image": "muffins.jpg",
+    "tags": ["Baking Tips", "Gluten-Free"]
+  },
+  {
+    "slug": "choosing-the-right-oils-for-healthier-baking",
+    "title": "Choosing the Right Oils for Healthier Baking",
+    "excerpt": "A baker's guide to oils — choosing not just for taste but for health, quality, and performance.",
+    "date": "2025-09-03",
+    "dateDisplay": "September 3, 2025",
+    "image": "oils-hero.jpg",
+    "tags": ["Baking Tips", "Health & Wellness"]
+  },
+  {
+    "slug": "scoby-secrets-making-kombucha-at-home",
+    "title": "Scoby Secrets: Making Kombucha at Home",
+    "excerpt": "How to brew tangy, fizzy kombucha at home — what a scoby is, what it does, and the two-stage fermentation that turns sweet tea into a probiotic drink.",
+    "date": "2025-07-23",
+    "dateDisplay": "July 23, 2025",
+    "image": "kombucha-hero.jpg",
+    "tags": ["Recipes", "Health & Wellness"]
+  },
+  {
     "slug": "stop-throwing-your-toppings-in",
     "title": "Stop Throwing Your Toppings In. There's a Better Way.",
     "excerpt": "If your blueberries pool at the bottom and your chocolate chips streak the batter, you're mixing them in wrong. Four fixes from a commercial bakery kitchen.",
     "date": "2026-04-19",
     "dateDisplay": "April 19, 2026",
-    "image": "toppings.webp"
+    "image": "toppings.webp",
+    "tags": ["Baking Tips"]
   },
   {
     "slug": "the-perfect-cold-brew",
@@ -13,6 +77,7 @@
     "excerpt": "Cold brew has a reputation for being difficult. It isn't. The process is mostly waiting — but a few small decisions early on make the difference between smooth and bitter.",
     "date": "2026-04-19",
     "dateDisplay": "April 19, 2026",
-    "image": "pexels-nicola-barts-7937416.webp"
+    "image": "pexels-nicola-barts-7937416.webp",
+    "tags": ["Recipes"]
   }
 ]
