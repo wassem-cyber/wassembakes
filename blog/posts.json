@@ -1,12 +1,57 @@
 [
   {
+    "slug": "vegan-egg-wash-replacements",
+    "title": "Vegan Egg Wash Replacements",
+    "excerpt": "We tested every option. Every. Single. One.",
+    "date": "2026-03-09",
+    "dateDisplay": "March 9, 2026",
+    "image": "egg-wash-tray.jpg",
+    "tags": ["Baking Tips", "Vegan"]
+  },
+  {
+    "slug": "how-to-use-psyllium-husk",
+    "title": "How to Use Psyllium Husk",
+    "excerpt": "Psyllium husk is the secret ingredient behind I-can't-believe-it's-gluten-free baking.",
+    "date": "2026-04-08",
+    "dateDisplay": "April 8, 2026",
+    "image": "psyllium-rolls.jpg",
+    "tags": ["Baking Tips", "Gluten-Free"]
+  },
+  {
+    "slug": "make-coconut-yogurt-at-home",
+    "title": "Make Coconut Yogurt at Home",
+    "excerpt": "Coconut yogurt is one of those things that sounds complicated until you realize it's just two ingredients and a little patience.",
+    "date": "2026-04-29",
+    "dateDisplay": "April 29, 2026",
+    "image": "coconut-yogurt-hero.jpg",
+    "tags": ["Recipes", "Vegan"]
+  },
+  {
+    "slug": "what-is-nutritional-yeast",
+    "title": "What is Nutritional Yeast?",
+    "excerpt": "Cheesy, funky, and gaining popularity as interest grows in vegan cooking.",
+    "date": "2025-12-23",
+    "dateDisplay": "December 23, 2025",
+    "image": "nooch-bowl.jpg",
+    "tags": ["Baking Tips", "Health & Wellness", "Vegan"]
+  },
+  {
+    "slug": "lemon-zucchini-protein-muffins",
+    "title": "Lemon Zucchini Protein Muffins",
+    "excerpt": "These muffins pack in a whole lot of nutritional value with low sugar to boot.",
+    "date": "2025-12-03",
+    "dateDisplay": "December 3, 2025",
+    "image": "lemon-zucchini-flatlay.jpg",
+    "tags": ["Recipes", "Gluten-Free"]
+  },
+  {
     "slug": "protein-packed-rice-krispie-treats",
     "title": "Protein Packed Rice Krispie Treats",
     "excerpt": "Take a bite of my healthy take on the classic rice krispy treat - date-sweetened, protein-packed, and built to fuel you.",
     "date": "2025-11-11",
     "dateDisplay": "November 11, 2025",
     "image": "rkt-hero.jpg",
-    "tags": ["Recipes", "Health & Wellness"]
+    "tags": ["Recipes", "Vegan", "Gluten-Free"]
   },
   {
     "slug": "essential-egg-replacements-for-vegan-baking",
@@ -24,7 +69,8 @@
     "date": "2025-10-08",
     "dateDisplay": "October 8, 2025",
     "image": "beets-pattern.jpg",
-    "tags": ["Recipes", "Health & Wellness"]
+    "tags": ["Recipes", "Health & Wellness"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
   },
   {
     "slug": "starter-guide-to-gluten-free-flours",
@@ -60,7 +106,8 @@
     "date": "2025-07-23",
     "dateDisplay": "July 23, 2025",
     "image": "kombucha-hero.jpg",
-    "tags": ["Recipes", "Health & Wellness"]
+    "tags": ["Recipes", "Health & Wellness"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
   },
   {
     "slug": "stop-throwing-your-toppings-in",
@@ -75,9 +122,10 @@
     "slug": "the-perfect-cold-brew",
     "title": "The Perfect Cold Brew",
     "excerpt": "Cold brew has a reputation for being difficult. It isn't. The process is mostly waiting — but a few small decisions early on make the difference between smooth and bitter.",
-    "date": "2026-04-19",
-    "dateDisplay": "April 19, 2026",
+    "date": "2026-04-16",
+    "dateDisplay": "April 16, 2026",
     "image": "pexels-nicola-barts-7937416.webp",
-    "tags": ["Recipes"]
+    "tags": ["Recipes"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
   }
 ]

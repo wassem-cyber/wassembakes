@@ -22,7 +22,31 @@
     { type: "tag", tag: "Health & Wellness" },
   ];
 
-  function renderCard(p) {
+  const TAG_BADGE_DISPLAY = {
+    "Vegan": "Vegan",
+    "Gluten-Free": "Gluten-Free",
+    "Health & Wellness": "Health Focused",
+  };
+
+  function recipeTagSet(p) {
+    return new Set([...(p.tags || []), ...(p.recipeTags || [])]);
+  }
+
+  function renderTagBadges(p) {
+    const set = recipeTagSet(p);
+    const matched = Object.keys(TAG_BADGE_DISPLAY).filter((t) => set.has(t));
+    if (!matched.length) return "";
+    return `<div class="post-card-badges">${matched
+      .map(
+        (t) =>
+          `<span class="post-card-badge">${TAG_BADGE_DISPLAY[t]}</span>`
+      )
+      .join("")}</div>`;
+  }
+
+  function renderCard(p, cardOptions) {
+    const badges =
+      cardOptions && cardOptions.showTags ? renderTagBadges(p) : "";
     return `
       <li class="post-card">
         <a href="${p.slug}.html">
@@ -30,6 +54,7 @@
           <div class="post-card-content">
             <div class="post-card-date">${p.dateDisplay}</div>
             <h2>${p.title}</h2>
+            ${badges}
             <p class="post-card-excerpt">${p.excerpt}</p>
           </div>
         </a>
@@ -39,25 +64,42 @@
   function renderSection(title, posts, options) {
     if (!posts.length) return "";
     options = options || {};
-    const heading = options.small
+    const titleEl = options.small
       ? `<h3 class="posts-subsection-title">${title}</h3>`
       : `<h2 class="posts-section-title">${title}</h2>`;
+    const seeAll = options.seeAll
+      ? `<a class="posts-section-link" href="${options.seeAll.href}">${options.seeAll.label} &rarr;</a>`
+      : "";
+    const heading = seeAll
+      ? `<div class="posts-section-head">${titleEl}${seeAll}</div>`
+      : titleEl;
+    const filterLinks = options.filterLinks
+      ? `<div class="posts-section-filters">${options.filterLinks
+          .map(
+            (f) =>
+              `<a class="recipe-filter" href="${f.href}">${f.label}</a>`
+          )
+          .join("")}</div>`
+      : "";
+    const extra = options.className ? " " + options.className : "";
     if (options.grid) {
       return `
-      <section class="posts-section is-grid">
+      <section class="posts-section is-grid${extra}">
         ${heading}
-        <ul class="posts">${posts.map(renderCard).join("")}</ul>
+        ${filterLinks}
+        <ul class="posts">${posts.map((p) => renderCard(p, { showTags: !!options.showTags })).join("")}</ul>
       </section>`;
     }
-    const sectionClass = options.small ? "posts-section is-sub" : "posts-section";
+    const sectionClass = (options.small ? "posts-section is-sub" : "posts-section") + extra;
     const arrowLeft = `<button class="posts-arrow left" type="button" aria-label="Scroll left" data-scroll="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>`;
     const arrowRight = `<button class="posts-arrow right" type="button" aria-label="Scroll right" data-scroll="1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
     return `
       <section class="${sectionClass}">
         ${heading}
+        ${filterLinks}
         <div class="posts-row">
           ${arrowLeft}
-          <ul class="posts">${posts.map(renderCard).join("")}</ul>
+          <ul class="posts">${posts.map((p) => renderCard(p, { showTags: !!options.showTags })).join("")}</ul>
           ${arrowRight}
         </div>
       </section>`;
@@ -138,9 +180,28 @@
     }
     const tagSections = TAG_SECTIONS.map((item) => {
       if (item.type === "tag") {
+        const opts =
+          item.tag === "Recipes"
+            ? {
+                seeAll: { href: "recipes.html", label: "See all recipes" },
+                className: "is-featured",
+                showTags: true,
+                filterLinks: [
+                  { label: "Vegan", href: "recipes.html?filter=Vegan" },
+                  { label: "Gluten-Free", href: "recipes.html?filter=Gluten-Free" },
+                  {
+                    label: "Health Focused",
+                    href:
+                      "recipes.html?filter=" +
+                      encodeURIComponent("Health & Wellness"),
+                  },
+                ],
+              }
+            : undefined;
         return renderSection(
           item.tag,
-          posts.filter((p) => (p.tags || []).includes(item.tag))
+          posts.filter((p) => (p.tags || []).includes(item.tag)),
+          opts
         );
       }
       if (item.type === "group") {
@@ -156,8 +217,88 @@
       return "";
     }).join("");
     const heroSection = renderHeroSection(posts);
-    const allSection = renderSection("All Posts", posts, { grid: true });
-    el.innerHTML = heroSection + tagSections + allSection;
+    el.innerHTML = heroSection + tagSections + '<div data-all-posts></div>';
+
+    const allEl = el.querySelector("[data-all-posts]");
+    const PAGE_SIZE = 12;
+    const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+    let currentPage = 1;
+
+    function renderPagination() {
+      if (totalPages <= 1) return "";
+      let html = '<div class="posts-pagination">';
+      for (let i = 1; i <= totalPages; i++) {
+        const active = i === currentPage ? " is-active" : "";
+        html += `<button class="posts-page-btn${active}" type="button" data-page="${i}">${i}</button>`;
+      }
+      html += "</div>";
+      return html;
+    }
+
+    function renderAll() {
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const slice = posts.slice(start, start + PAGE_SIZE);
+      allEl.innerHTML =
+        renderSection("All Posts", slice, { grid: true }) + renderPagination();
+      allEl.querySelectorAll(".posts-page-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          currentPage = parseInt(btn.dataset.page, 10);
+          renderAll();
+          allEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+
+    renderAll();
+  }
+
+  function renderRecipesList(posts) {
+    const el = document.querySelector("[data-recipes-list]");
+    if (!el) return;
+    const recipes = posts.filter((p) => (p.tags || []).includes("Recipes"));
+    let activeFilter = "all";
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedFilter = params.get("filter");
+    if (requestedFilter) {
+      const match = document.querySelector(
+        `[data-recipe-filters] .recipe-filter[data-filter="${requestedFilter.replace(/"/g, '\\"')}"]`
+      );
+      if (match) {
+        activeFilter = requestedFilter;
+        document
+          .querySelectorAll("[data-recipe-filters] .recipe-filter")
+          .forEach((b) => b.classList.toggle("is-active", b === match));
+      }
+    }
+
+    function render() {
+      const filtered =
+        activeFilter === "all"
+          ? recipes
+          : recipes.filter((p) => recipeTagSet(p).has(activeFilter));
+      if (!filtered.length) {
+        el.innerHTML =
+          '<ul class="posts"><li class="posts-empty">No recipes match this filter yet.</li></ul>';
+        return;
+      }
+      el.innerHTML = `
+        <section class="posts-section is-grid">
+          <ul class="posts">${filtered.map((p) => renderCard(p, { showTags: true })).join("")}</ul>
+        </section>`;
+    }
+
+    document.querySelectorAll("[data-recipe-filters] .recipe-filter").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeFilter = btn.dataset.filter;
+        document
+          .querySelectorAll("[data-recipe-filters] .recipe-filter")
+          .forEach((b) => b.classList.toggle("is-active", b === btn));
+        render();
+      });
+    });
+
+    render();
   }
 
   function renderPostTags(posts) {
@@ -248,6 +389,7 @@
   async function init() {
     const posts = await loadPosts();
     renderIndexList(posts);
+    renderRecipesList(posts);
     wirePostsArrows();
     renderSidebarLatest(posts);
     renderPostTags(posts);

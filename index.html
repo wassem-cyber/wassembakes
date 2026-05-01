@@ -136,9 +136,9 @@
     animation: fadeUp 0.8s 0.2s both;
   }
   .hero h1 {
-    font-family: "ivybodoni", 'Fraunces', serif;
+    font-family: "dejanire-headline", 'Fraunces', serif;
     font-size: clamp(3.5rem, 11vw, 10rem);
-    font-weight: 700;
+    font-weight: 900;
     line-height: 0.88;
     letter-spacing: -0.02em;
     margin-bottom: 2rem;
@@ -208,7 +208,7 @@
     margin-bottom: 1rem;
   }
   .section-title {
-    font-family: "ivybodoni", 'Fraunces', serif;
+    font-family: "dejanire-headline", 'Fraunces', serif;
     font-size: clamp(2.5rem, 6vw, 5rem);
     font-weight: 600;
     line-height: 0.95;
@@ -369,6 +369,155 @@
 
   /* Blog link */
   .blog-link, .shop-link { background: var(--paper); }
+  .blog-subheading {
+    font-family: "dejanire-headline", 'Fraunces', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--orange);
+    max-width: 1200px;
+    margin: 0 auto 1.25rem;
+  }
+  .blog-feature-heading {
+    font-family: "dejanire-headline", 'Fraunces', serif;
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--orange);
+    margin-bottom: 1rem;
+  }
+  .blog-feature {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+  }
+  .blog-feature-card {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2.5rem;
+    color: var(--ink);
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  .blog-feature-card:hover { transform: translateY(-4px); }
+  .blog-feature-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--cream);
+  }
+  .blog-feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .blog-feature-card:hover .blog-feature-image img { transform: scale(1.03); }
+  .blog-feature-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--orange);
+    margin-bottom: 1rem;
+  }
+  .blog-feature-date {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+    margin-bottom: 0.75rem;
+  }
+  .blog-feature-title {
+    font-family: "dejanire-headline", 'Fraunces', serif;
+    font-size: clamp(2rem, 3.5vw, 2.85rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .blog-feature-excerpt {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    opacity: 0.85;
+  }
+  @media (max-width: 800px) {
+    .blog-feature-card { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  .blog-link-cta {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .blog-link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: 6px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .blog-link-btn:hover {
+    background: var(--orange);
+    transform: scale(1.03);
+  }
+  .blog-previews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .blog-preview-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--ink);
+    transition: transform 0.3s ease;
+  }
+  .blog-preview-card:hover { transform: translateY(-4px); }
+  .blog-preview-image {
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--cream);
+  }
+  .blog-preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .blog-preview-card:hover .blog-preview-image img { transform: scale(1.04); }
+  .blog-preview-date {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+  }
+  .blog-preview-title {
+    font-family: "dejanire-headline", 'Fraunces', serif;
+    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .blog-preview-excerpt {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+  @media (max-width: 800px) {
+    .blog-previews { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
 
   /* Shop hero */
   .shop-hero {
@@ -529,7 +678,7 @@
     border-radius: 4px;
   }
   .about-text h2 {
-    font-family: "ivybodoni", 'Fraunces', serif;
+    font-family: "dejanire-headline", 'Fraunces', serif;
     font-size: clamp(2.25rem, 5vw, 3.75rem);
     font-weight: 600;
     line-height: 1;
@@ -708,7 +857,7 @@
 <section class="hero">
   <div class="hero-content">
     <div class="hero-label">Est. 2003 · New York</div>
-    <h1>Gluten-<br>free.<br>Vegan.<br><em>Obsessive.</em></h1>
+    <h1>Gluten-<br>free.<br>Vegan.<br><em>Obsessed.</em></h1>
     <div class="hero-cta-wrap">
       <a href="blog/index.html" class="hero-cta">Let's go<svg class="hero-cta-arrow" viewBox="0 0 72 10" aria-hidden="true"><path d="M0 5 L66 5 M60 1 L66 5 L60 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
@@ -720,15 +869,20 @@
 
 <section class="blog-link reveal">
   <div class="section-label stagger-item">Recipes & Guides</div>
-  <h2 class="section-title stagger-item" style="margin-bottom: 2rem;">Field notes <em>from the kitchen.</em></h2>
-  <a href="https://sensibleedibles.com/blogs/vegan-gluten-free-bakers" class="big-link stagger-item">Read the blog</a>
+  <h2 class="section-title stagger-item" style="margin-bottom: 2rem;">Field notes <em>from the kitchen</em></h2>
+  <div class="blog-link-cta stagger-item">
+    <a href="blog/index.html" class="blog-link-btn">Go to blog &rarr;</a>
+  </div>
+  <div class="blog-feature stagger-item" data-blog-feature></div>
+  <h3 class="blog-subheading stagger-item">Tips &amp; More</h3>
+  <div class="blog-previews stagger-item" data-blog-previews></div>
 </section>
 
 <section class="about reveal">
   <div class="about-grid">
     <div class="about-text">
       <div class="section-label stagger-item">About</div>
-      <h2 class="stagger-item">Meet <em>Wassem.</em></h2>
+      <h2 class="stagger-item">Meet <em>Wassem</em></h2>
       <p class="stagger-item">I'm sharing 20 years of experience running the largest vegan and gluten-free bakery in New York City. Tips and advice straight from my real bakery kitchen, where wellness, dietary restrictions, and sustainability are always a priority.</p>
     </div>
     <div class="about-photo stagger-item">
@@ -739,7 +893,7 @@
 
 <section class="shop-link reveal" id="shop">
   <div class="section-label stagger-item">Shop</div>
-  <h2 class="section-title stagger-item" style="margin-bottom: 1.5rem;">Sensible <em>Bakery.</em></h2>
+  <h2 class="section-title stagger-item" style="margin-bottom: 1.5rem;">Sensible <em>Bakery</em></h2>
   <div class="shop-hero stagger-item">
     <img src="shop/chocolate%20chip.jpg" alt="Chocolate chip cookies from Sensible Edible Bakery" loading="lazy" decoding="async">
     <a class="shop-hero-btn" href="https://sensibleedibles.com/collections/all" target="_blank" rel="noopener">Shop vegan &amp; gluten-free treats</a>
@@ -900,6 +1054,45 @@
       msg.textContent = "Something went wrong. Try again.";
     });
   });
+})();
+(function () {
+  var featureEl = document.querySelector('[data-blog-feature]');
+  var previewEl = document.querySelector('[data-blog-previews]');
+  if (!featureEl && !previewEl) return;
+  fetch('blog/posts.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (posts) {
+      var sorted = posts.slice().sort(function (a, b) { return b.date.localeCompare(a.date); });
+      var featured = sorted.find(function (p) { return (p.tags || []).indexOf('Recipes') !== -1; });
+      var remaining = featured ? sorted.filter(function (p) { return p.slug !== featured.slug; }) : sorted;
+      var recent = remaining.slice(0, 3);
+
+      if (featureEl && featured) {
+        var fImg = featured.image ? '<img src="blog/images/' + featured.image + '" alt="" loading="lazy" decoding="async">' : '';
+        featureEl.innerHTML = '<a class="blog-feature-card" href="blog/' + featured.slug + '.html">'
+          + '<div class="blog-feature-image">' + fImg + '</div>'
+          + '<div class="blog-feature-content">'
+          + '<h3 class="blog-feature-heading">Featured Recipe</h3>'
+          + '<div class="blog-feature-date">' + featured.dateDisplay + '</div>'
+          + '<h3 class="blog-feature-title">' + featured.title + '</h3>'
+          + '<p class="blog-feature-excerpt">' + featured.excerpt + '</p>'
+          + '</div></a>';
+      }
+
+      if (previewEl) {
+        previewEl.innerHTML = recent.map(function (p) {
+          var img = p.image ? '<img src="blog/images/' + p.image + '" alt="" loading="lazy" decoding="async">' : '';
+          return '<a class="blog-preview-card" href="blog/' + p.slug + '.html">'
+            + '<div class="blog-preview-image">' + img + '</div>'
+            + '<div class="blog-preview-content">'
+            + '<div class="blog-preview-date">' + p.dateDisplay + '</div>'
+            + '<h3 class="blog-preview-title">' + p.title + '</h3>'
+            + '<p class="blog-preview-excerpt">' + p.excerpt + '</p>'
+            + '</div></a>';
+        }).join('');
+      }
+    })
+    .catch(function () {});
 })();
 </script>
 </body>
