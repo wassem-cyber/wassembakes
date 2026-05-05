@@ -315,27 +315,40 @@
   }
 
   function renderSidebarLatest(posts) {
-    const el = document.querySelector("[data-latest-list]");
-    if (!el) return;
-    const others = posts.filter((p) => p.slug !== CURRENT_SLUG).slice(0, 3);
+    const block = document.querySelector("[data-latest-list]")?.closest(".sb-block");
+    if (!block) return;
+    const others = posts.filter((p) => p.slug !== CURRENT_SLUG).slice(0, 4);
     if (!others.length) {
-      el.closest(".sb-block")?.remove();
+      block.remove();
       return;
     }
-    el.innerHTML = others
-      .map(
-        (p) => `
-      <li>
-        <a href="${p.slug}.html">
-          ${p.image ? `<img class="sb-latest-img" src="images/${p.image}" alt="" loading="lazy">` : ""}
-          <div class="sb-latest-text">
-            <span class="sb-latest-date">${p.dateDisplay}</span>
-            <span class="sb-latest-title">${p.title}</span>
-          </div>
-        </a>
-      </li>`
-      )
-      .join("");
+    const [feat, ...rest] = others;
+    const featuredHtml = `
+      <a class="sb-latest-feature" href="${feat.slug}.html">
+        ${feat.image ? `<img class="sb-latest-feature-img" src="images/${feat.image}" alt="" loading="lazy">` : ""}
+        <div class="sb-latest-feature-text">
+          <span class="sb-latest-date">${feat.dateDisplay}</span>
+          <span class="sb-latest-feature-title">${feat.title}</span>
+        </div>
+      </a>`;
+    const restHtml = rest.length
+      ? `<ul class="sb-latest-list">${rest
+          .map(
+            (p) => `
+        <li>
+          <a href="${p.slug}.html">
+            ${p.image ? `<img class="sb-latest-img" src="images/${p.image}" alt="" loading="lazy">` : ""}
+            <div class="sb-latest-text">
+              <span class="sb-latest-date">${p.dateDisplay}</span>
+              <span class="sb-latest-title">${p.title}</span>
+            </div>
+          </a>
+        </li>`
+          )
+          .join("")}</ul>`
+      : "";
+    const label = block.querySelector(".sb-label");
+    block.innerHTML = (label ? label.outerHTML : "") + featuredHtml + restHtml;
   }
 
   function wireNewsletterForm() {

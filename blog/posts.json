@@ -127,5 +127,14 @@
     "image": "pexels-nicola-barts-7937416.webp",
     "tags": ["Recipes"],
     "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
+    "slug": "vanilla-extract-vs-paste-vs-powder",
+    "title": "Vanilla Extract vs Paste vs Powder",
+    "excerpt": "Three forms of vanilla, three different jobs. Knowing what each one does — and using them on purpose — will make your baked goods better.",
+    "date": "2026-05-05",
+    "dateDisplay": "May 5, 2026",
+    "image": "vanilla-muffins.jpg",
+    "tags": ["Baking Tips"]
   }
 ]
