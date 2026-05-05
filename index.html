@@ -974,7 +974,7 @@
       <div class="section-label stagger-item" style="opacity: 0.6;">Press & Partnerships</div>
       <h2 class="section-title stagger-item"><em>Work</em> with me.</h2>
       <div class="press-stats stagger-item">
-        <div class="stat"><div class="stat-num">85.3K</div><div class="stat-label">Instagram</div></div>
+        <div class="stat"><div class="stat-num" id="ig-followers">85.3K</div><div class="stat-label">Instagram</div></div>
         <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Years Baking</div></div>
         <div class="stat"><div class="stat-num">#1</div><div class="stat-label">GF/V in NYC</div></div>
         <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Allergen-Focused</div></div>
@@ -1093,6 +1093,20 @@
       }
     })
     .catch(function () {});
+})();
+
+(function () {
+  var el = document.getElementById('ig-followers');
+  if (!el) return;
+  var url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0tBNycPHREY55Ka8NpqNYaKDA6B_llWsUWzCngXLbm2IFn_BvAT6Anb5bVaKb8-SEQlb6LO9XP7bT/pub?gid=1053133468&single=true&output=csv';
+  fetch(url + '&t=' + Date.now()).then(function (r) {
+    return r.ok ? r.text() : null;
+  }).then(function (csv) {
+    if (!csv) return;
+    var firstRow = csv.split('\n')[0].split(',');
+    var val = (firstRow[1] || '').trim().replace(/^"|"$/g, '');
+    if (val) el.textContent = val;
+  }).catch(function () {});
 })();
 </script>
 </body>
