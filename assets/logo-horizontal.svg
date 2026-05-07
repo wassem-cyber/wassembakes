@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 180" role="img" aria-label="wassem bakes">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,900&amp;display=swap');
+    .word { font-family: 'Fraunces', 'Georgia', serif; font-weight: 900; font-style: italic; letter-spacing: -0.04em; fill: #1A1714; }
+    .accent { fill: #FF8F1C; }
+  </style>
+  <text x="440" y="135" text-anchor="middle" class="word" font-size="140">wassem b<tspan class="accent">a</tspan>kes<tspan class="accent">.</tspan></text>
+</svg>

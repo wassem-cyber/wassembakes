@@ -32,6 +32,7 @@ nav {
   letter-spacing: -0.02em;
   font-style: italic;
 }
+.logo-accent { color: var(--orange); }
 .nav-links {
   display: flex;
   gap: 2rem;
