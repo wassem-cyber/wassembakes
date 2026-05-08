@@ -32,6 +32,16 @@
     return new Set([...(p.tags || []), ...(p.recipeTags || [])]);
   }
 
+  function imgVariants(image, title, sizes) {
+    const dot = image.lastIndexOf(".");
+    const base = image.substring(0, dot);
+    const ext = image.substring(dot);
+    const srcset = [480, 800, 1200]
+      .map((w) => `images/${base}-${w}w${ext} ${w}w`)
+      .join(", ");
+    return `src="images/${base}-800w${ext}" srcset="${srcset}" sizes="${sizes}" alt="${title}"`;
+  }
+
   function renderTagBadges(p) {
     const set = recipeTagSet(p);
     const matched = Object.keys(TAG_BADGE_DISPLAY).filter((t) => set.has(t));
@@ -50,7 +60,7 @@
     return `
       <li class="post-card">
         <a href="${p.slug}.html">
-          <div class="post-card-image">${p.image ? `<img src="images/${p.image}" alt="" loading="lazy" decoding="async">` : ""}</div>
+          <div class="post-card-image">${p.image ? `<img ${imgVariants(p.image, p.title, "(max-width: 600px) 100vw, 400px")} loading="lazy" decoding="async">` : ""}</div>
           <div class="post-card-content">
             <div class="post-card-date">${p.dateDisplay}</div>
             <h2>${p.title}</h2>
@@ -325,7 +335,7 @@
     const [feat, ...rest] = others;
     const featuredHtml = `
       <a class="sb-latest-feature" href="${feat.slug}.html">
-        ${feat.image ? `<img class="sb-latest-feature-img" src="images/${feat.image}" alt="" loading="lazy">` : ""}
+        ${feat.image ? `<img class="sb-latest-feature-img" ${imgVariants(feat.image, feat.title, "(max-width: 600px) 100vw, 600px")} loading="lazy">` : ""}
         <div class="sb-latest-feature-text">
           <span class="sb-latest-date">${feat.dateDisplay}</span>
           <span class="sb-latest-feature-title">${feat.title}</span>
@@ -337,7 +347,7 @@
             (p) => `
         <li>
           <a href="${p.slug}.html">
-            ${p.image ? `<img class="sb-latest-img" src="images/${p.image}" alt="" loading="lazy">` : ""}
+            ${p.image ? `<img class="sb-latest-img" ${imgVariants(p.image, p.title, "(max-width: 600px) 50vw, 200px")} loading="lazy">` : ""}
             <div class="sb-latest-text">
               <span class="sb-latest-date">${p.dateDisplay}</span>
               <span class="sb-latest-title">${p.title}</span>

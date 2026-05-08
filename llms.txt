@@ -1,0 +1,29 @@
+# Wassem Bakes
+
+> Tips, recipes, and techniques from a professional baker with 20+ years of experience running the largest vegan and gluten-free bakery in New York City. Real ratios, real science, no fluff.
+
+## Pages
+
+- [Home](https://wassembakes.com/): Featured posts, recent recipes, and an introduction to Wassem
+- [About](https://wassembakes.com/about/): About Wassem Moarsi and the bakery
+- [Blog](https://wassembakes.com/blog/): All recipes, baking tips, and guides
+- [Links](https://wassembakes.com/links/): Social media, contact, and external links
+
+## Blog Posts
+
+- [Vanilla Extract vs Paste vs Powder](https://wassembakes.com/blog/vanilla-extract-vs-paste-vs-powder.html): Three forms of vanilla, three different jobs. Knowing what each one does — and using them on purpose — will make your baked goods better.
+- [Make Coconut Yogurt at Home](https://wassembakes.com/blog/make-coconut-yogurt-at-home.html): Coconut yogurt is one of those things that sounds complicated until you realize it's just two ingredients and a little patience.
+- [Stop Throwing Your Toppings In. There's a Better Way.](https://wassembakes.com/blog/stop-throwing-your-toppings-in.html): If your blueberries pool at the bottom and your chocolate chips streak the batter, you're mixing them in wrong. Four fixes from a commercial bakery kitchen.
+- [The Perfect Cold Brew](https://wassembakes.com/blog/the-perfect-cold-brew.html): Cold brew has a reputation for being difficult. It isn't. The process is mostly waiting — but a few small decisions early on make the difference between smooth and bitter.
+- [How to Use Psyllium Husk](https://wassembakes.com/blog/how-to-use-psyllium-husk.html): Psyllium husk is the secret ingredient behind I-can't-believe-it's-gluten-free baking.
+- [Vegan Egg Wash Replacements](https://wassembakes.com/blog/vegan-egg-wash-replacements.html): We tested every option. Every. Single. One.
+- [What is Nutritional Yeast?](https://wassembakes.com/blog/what-is-nutritional-yeast.html): Cheesy, funky, and gaining popularity as interest grows in vegan cooking.
+- [Lemon Zucchini Protein Muffins](https://wassembakes.com/blog/lemon-zucchini-protein-muffins.html): These muffins pack in a whole lot of nutritional value with low sugar to boot.
+- [Protein Packed Rice Krispie Treats](https://wassembakes.com/blog/protein-packed-rice-krispie-treats.html): Take a bite of my healthy take on the classic rice krispy treat - date-sweetened, protein-packed, and built to fuel you.
+- [Essential Egg Replacements for Vegan Baking](https://wassembakes.com/blog/essential-egg-replacements-for-vegan-baking.html): Eggs do three jobs in baking - binding, moisture, and leavening. The key to veganizing a recipe is knowing what you're replacing.
+- [Gut-Healthy Postbiotics With Fermented Beets](https://wassembakes.com/blog/gut-healthy-postbiotics-with-fermented-beets.html): Learn what ferments can do for your gut, plus an easy beet recipe to get started.
+- [Starter Guide to Gluten-Free Flours](https://wassembakes.com/blog/starter-guide-to-gluten-free-flours.html): Gluten-free flours aren't one-to-one swaps for wheat. A starter guide to the flours we use most — what each does, when to reach for it, and a sample blend to get you started.
+- [Binders For Better Gluten-Free Baking](https://wassembakes.com/blog/binders-for-better-gluten-free-baking.html): If you're baking without gluten, adding binders is essential. We're taking you through what they all do and when and how to use each.
+- [Choosing the Right Oils for Healthier Baking](https://wassembakes.com/blog/choosing-the-right-oils-for-healthier-baking.html): A baker's guide to oils — choosing not just for taste but for health, quality, and performance.
+- [Naturally Color Treats](https://wassembakes.com/blog/naturally-color-treats.html): Skip the artificial dyes. Beet, butterfly pea, spirulina, turmeric, and matcha — our favorite natural food colors and how to get the most out of them.
+- [Scoby Secrets: Making Kombucha at Home](https://wassembakes.com/blog/scoby-secrets-making-kombucha-at-home.html): How to brew tangy, fizzy kombucha at home — what a scoby is, what it does, and the two-stage fermentation that turns sweet tea into a probiotic drink.
