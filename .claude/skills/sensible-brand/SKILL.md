@@ -59,6 +59,27 @@ When pitching Sensible on the creator brand (wassembakes), these values justify 
 
 Don't introduce new brand colors without asking. Neutrals (black, white, grays) are fine for type and UI chrome.
 
+## Logo / wordmark (wassembakes)
+
+The wassembakes wordmark is set in **Fraunces 900 italic** with the `a` in "bakes" and the trailing period in **brand orange (#FF8F1C)**. Type and accents on a yellow (`#FFD451`) field is the canonical brand-mark presentation.
+
+Master files live in `assets/`:
+
+| File                       | Use                                                                 |
+|----------------------------|---------------------------------------------------------------------|
+| `logo.svg`                 | Stacked wordmark, transparent bg — primary master                   |
+| `logo-horizontal.svg`      | Single-line "wassem bakes." — headers, email signatures, wide spaces |
+| `logo-square.svg`          | 1:1 with yellow background — IG avatar, app icons, social profiles  |
+| `logo-dark.svg`            | Cream/paper type for dark backgrounds — orange accent stays orange  |
+| `logo-mark.svg`            | "w." mark only — favicons, tiny placements (≤32px), watermarks      |
+
+Rules:
+
+- **Don't recolor** the type without the orange accent — the colored `a` and period are the recognition cues.
+- **Don't compress vertically** or add a stroke. Use the SVG masters; don't recreate in raster unless exporting from these.
+- For an OG / Twitter image, export `logo-square.svg` to a 1200×630 PNG with the wordmark left-aligned over yellow. (Raster export not committed yet — use a converter or design tool when needed.)
+- In-page text logos (the nav element) use the same accent pattern in HTML: `wassem b<span class="logo-accent">a</span>kes<span class="logo-accent">.</span>` with `.logo-accent { color: var(--orange); }`.
+
 ## Voice
 
 - **Casual** — write like a human, not a brochure.
