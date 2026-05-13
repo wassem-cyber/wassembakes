@@ -16,7 +16,8 @@
 <meta name="twitter:image" content="https://wassembakes.com/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,900;1,9..144,300&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,900;1,9..144,300&family=Inter+Tight:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,900;1,9..144,300&family=Inter+Tight:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://use.typekit.net/vqu6uma.css" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://use.typekit.net/vqu6uma.css"></noscript>
 <style>
   :root {
     --orange: #FF8F1C;
@@ -69,11 +70,11 @@
     margin-bottom: 1.25rem;
   }
   .name {
-    font-family: 'Fraunces', serif;
+    font-family: "dejanire-headline", 'Fraunces', serif;
     font-weight: 900;
-    font-size: 2rem;
-    font-style: italic;
+    font-size: 2.25rem;
     letter-spacing: -0.02em;
+    line-height: 0.95;
     margin-bottom: 0.25rem;
   }
   .handle {
@@ -84,14 +85,13 @@
     margin-bottom: 0.75rem;
   }
   .tagline {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 1.05rem;
+    font-family: "bettoni-variable", 'Fraunces', serif;
+    font-variation-settings: 'opsz' 40, 'wght' 110;
+    font-size: 1.15rem;
     line-height: 1.4;
     text-align: center;
     max-width: 340px;
-    opacity: 0.8;
+    opacity: 0.85;
     margin-bottom: 2.5rem;
   }
   .links {
@@ -123,6 +123,20 @@
     height: 20px;
     flex-shrink: 0;
   }
+  .link.has-thumb {
+    padding: 2.5rem 5rem;
+  }
+  .link-thumb {
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: calc(100% - 12px);
+    aspect-ratio: 1 / 1;
+    border-radius: 999px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
   .link:hover, .link:active {
     background: var(--ink);
     color: var(--paper);
@@ -148,7 +162,7 @@
   }
   .footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(26,23,20,0.2); }
   @media (max-width: 480px) {
-    .name { font-size: 1.75rem; }
+    .name { font-size: 2rem; }
     .avatar { width: 100px; height: 100px; }
   }
 </style>
@@ -162,8 +176,14 @@
   <p class="tagline">Gluten-free &amp; vegan baker. 20+ years, NYC. Real ratios, real science, no fluff.</p>
 
   <div class="links">
-    <a class="link primary" href="https://sensibleedibles.com" target="_blank" rel="noopener">Sensible Bakery NYC</a>
-    <a class="link" href="/blog/">Blog</a>
+    <a class="link primary has-thumb" href="https://sensibleedibles.com" target="_blank" rel="noopener">
+      <img class="link-thumb" src="/blog/images/chocolate-chip-480w.jpg" alt="" loading="lazy">
+      Sensible Bakery NYC
+    </a>
+    <a class="link has-thumb" href="/blog/">
+      <img class="link-thumb" src="/about-480w.jpg" alt="" loading="lazy">
+      Blog
+    </a>
     <a class="link" href="https://instagram.com/wassembakes" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       Instagram
@@ -181,7 +201,7 @@
       Press kit
     </a>
   </div>
-  <div id="pressKitMsg" style="margin-top: 1rem; font-family: 'Fraunces', serif; font-style: italic; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; text-align: center;"></div>
+  <div id="pressKitMsg" style="margin-top: 1rem; font-family: 'bettoni-variable', 'Fraunces', serif; font-variation-settings: 'opsz' 40, 'wght' 110; font-size: 0.95rem; opacity: 0; transition: opacity 0.3s; text-align: center;"></div>
 
   <div class="footer">
     <a href="/">wassembakes.com</a>

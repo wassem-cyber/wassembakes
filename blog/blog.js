@@ -59,7 +59,7 @@
       cardOptions && cardOptions.showTags ? renderTagBadges(p) : "";
     return `
       <li class="post-card">
-        <a href="${p.slug}.html">
+        <a href="${p.slug}">
           <div class="post-card-image">${p.image ? `<img ${imgVariants(p.image, p.title, "(max-width: 600px) 100vw, 400px")} loading="lazy" decoding="async">` : ""}</div>
           <div class="post-card-content">
             <div class="post-card-date">${p.dateDisplay}</div>
@@ -334,7 +334,7 @@
     }
     const [feat, ...rest] = others;
     const featuredHtml = `
-      <a class="sb-latest-feature" href="${feat.slug}.html">
+      <a class="sb-latest-feature" href="${feat.slug}">
         ${feat.image ? `<img class="sb-latest-feature-img" ${imgVariants(feat.image, feat.title, "(max-width: 600px) 100vw, 600px")} loading="lazy">` : ""}
         <div class="sb-latest-feature-text">
           <span class="sb-latest-date">${feat.dateDisplay}</span>
@@ -346,7 +346,7 @@
           .map(
             (p) => `
         <li>
-          <a href="${p.slug}.html">
+          <a href="${p.slug}">
             ${p.image ? `<img class="sb-latest-img" ${imgVariants(p.image, p.title, "(max-width: 600px) 50vw, 200px")} loading="lazy">` : ""}
             <div class="sb-latest-text">
               <span class="sb-latest-date">${p.dateDisplay}</span>

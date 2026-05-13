@@ -1,5 +1,24 @@
 [
   {
+    "slug": "pumpkin-pie-muffin",
+    "title": "Pumpkin Pie Muffin",
+    "excerpt": "Pumpkin pie meets banana-based muffin: flax-egg binding, oat-flour base, pumpkin pie spice filling, and a brown sugar crumb top.",
+    "date": "2024-11-01",
+    "dateDisplay": "November 1, 2024",
+    "image": "pumpkin-muffin-tray.jpg",
+    "tags": ["Recipes", "Vegan", "Gluten-Free"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
+    "slug": "sprouting-seeds-and-why-it-matters",
+    "title": "Sprouting Seeds And Why It Matters",
+    "excerpt": "Raw seeds lock up their minerals. Sprouting unlocks them. Here's how to sprout pumpkin, sunflower, quinoa, and more at home, plus the exceptions worth knowing.",
+    "date": "2026-05-13",
+    "dateDisplay": "May 13, 2026",
+    "image": "sprouted-granola.jpg",
+    "tags": ["Baking Tips", "Health & Wellness"]
+  },
+  {
     "slug": "naturally-color-treats",
     "title": "Naturally Color Treats",
     "excerpt": "Skip the artificial dyes. Beet, butterfly pea, spirulina, turmeric, and matcha — our favorite natural food colors and how to get the most out of them.",
