@@ -237,10 +237,14 @@
     function renderPagination() {
       if (totalPages <= 1) return "";
       let html = '<div class="posts-pagination">';
+      const prevDisabled = currentPage === 1 ? " disabled" : "";
+      html += `<button class="posts-page-btn posts-page-nav" type="button" data-page="${currentPage - 1}" aria-label="Previous page"${prevDisabled}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>`;
       for (let i = 1; i <= totalPages; i++) {
         const active = i === currentPage ? " is-active" : "";
-        html += `<button class="posts-page-btn${active}" type="button" data-page="${i}">${i}</button>`;
+        html += `<button class="posts-page-num${active}" type="button" data-page="${i}">${i}</button>`;
       }
+      const nextDisabled = currentPage === totalPages ? " disabled" : "";
+      html += `<button class="posts-page-btn posts-page-nav" type="button" data-page="${currentPage + 1}" aria-label="Next page"${nextDisabled}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
       html += "</div>";
       return html;
     }
@@ -250,7 +254,7 @@
       const slice = posts.slice(start, start + PAGE_SIZE);
       allEl.innerHTML =
         renderSection("All Posts", slice, { grid: true }) + renderPagination();
-      allEl.querySelectorAll(".posts-page-btn").forEach((btn) => {
+      allEl.querySelectorAll("[data-page]").forEach((btn) => {
         btn.addEventListener("click", () => {
           currentPage = parseInt(btn.dataset.page, 10);
           renderAll();
