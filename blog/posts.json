@@ -71,7 +71,8 @@
     "date": "2026-04-29",
     "dateDisplay": "April 29, 2026",
     "image": "coconut-yogurt-hero.jpg",
-    "tags": ["Recipes", "Vegan"]
+    "tags": ["Recipes", "Vegan", "Gluten-Free"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
   },
   {
     "slug": "what-is-nutritional-yeast",
