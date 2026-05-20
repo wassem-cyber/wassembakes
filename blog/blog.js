@@ -32,6 +32,16 @@
     return new Set([...(p.tags || []), ...(p.recipeTags || [])]);
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    }[c]));
+  }
+
   function imgVariants(image, title, sizes) {
     const dot = image.lastIndexOf(".");
     const base = image.substring(0, dot);
@@ -188,6 +198,67 @@
         '<ul class="posts"><li class="posts-empty">First post coming soon.</li></ul>';
       return;
     }
+
+    function showCurated() {
+      renderCurated(el, posts);
+      wirePostsArrows();
+    }
+
+    function showSearch(query) {
+      const q = query.toLowerCase();
+      const matches = posts.filter((p) => {
+        const haystack = [
+          p.title,
+          p.excerpt,
+          ...(p.tags || []),
+          ...(p.recipeTags || []),
+        ]
+          .join(" ")
+          .toLowerCase();
+        return haystack.includes(q);
+      });
+      const n = matches.length;
+      const summary = `<div class="posts-search-summary">${n} result${
+        n === 1 ? "" : "s"
+      } for &ldquo;${escapeHtml(query)}&rdquo;</div>`;
+      if (!n) {
+        el.innerHTML =
+          summary +
+          '<ul class="posts"><li class="posts-empty">No posts match your search.</li></ul>';
+        return;
+      }
+      el.innerHTML =
+        summary +
+        `<section class="posts-section is-grid"><ul class="posts">${matches
+          .map((p) => renderCard(p))
+          .join("")}</ul></section>`;
+    }
+
+    const input = document.querySelector("[data-search-input]");
+    if (input) {
+      const clearBtn = document.querySelector("[data-search-clear]");
+      const form = document.querySelector("[data-blog-search]");
+      function apply() {
+        const q = input.value.trim();
+        if (clearBtn) clearBtn.hidden = !q;
+        if (q) showSearch(q);
+        else showCurated();
+      }
+      input.addEventListener("input", apply);
+      if (form) form.addEventListener("submit", (e) => e.preventDefault());
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          input.value = "";
+          apply();
+          input.focus();
+        });
+      }
+    }
+
+    showCurated();
+  }
+
+  function renderCurated(el, posts) {
     const tagSections = TAG_SECTIONS.map((item) => {
       if (item.type === "tag") {
         const opts =
@@ -271,6 +342,7 @@
     if (!el) return;
     const recipes = posts.filter((p) => (p.tags || []).includes("Recipes"));
     let activeFilter = "all";
+    let searchQuery = "";
 
     const params = new URLSearchParams(window.location.search);
     const requestedFilter = params.get("filter");
@@ -287,13 +359,29 @@
     }
 
     function render() {
-      const filtered =
+      let filtered =
         activeFilter === "all"
           ? recipes
           : recipes.filter((p) => recipeTagSet(p).has(activeFilter));
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter((p) => {
+          const haystack = [
+            p.title,
+            p.excerpt,
+            ...(p.tags || []),
+            ...(p.recipeTags || []),
+          ]
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(q);
+        });
+      }
       if (!filtered.length) {
-        el.innerHTML =
-          '<ul class="posts"><li class="posts-empty">No recipes match this filter yet.</li></ul>';
+        const msg = searchQuery
+          ? "No recipes match your search."
+          : "No recipes match this filter yet.";
+        el.innerHTML = `<ul class="posts"><li class="posts-empty">${msg}</li></ul>`;
         return;
       }
       el.innerHTML = `
@@ -311,6 +399,27 @@
         render();
       });
     });
+
+    const input = document.querySelector("[data-search-input]");
+    if (input) {
+      const clearBtn = document.querySelector("[data-search-clear]");
+      const form = document.querySelector("[data-blog-search]");
+      input.addEventListener("input", () => {
+        searchQuery = input.value.trim();
+        if (clearBtn) clearBtn.hidden = !searchQuery;
+        render();
+      });
+      if (form) form.addEventListener("submit", (e) => e.preventDefault());
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          input.value = "";
+          searchQuery = "";
+          clearBtn.hidden = true;
+          render();
+          input.focus();
+        });
+      }
+    }
 
     render();
   }
@@ -417,7 +526,6 @@
     const posts = await loadPosts();
     renderIndexList(posts);
     renderRecipesList(posts);
-    wirePostsArrows();
     renderSidebarLatest(posts);
     renderPostTags(posts);
     wireNewsletterForm();

@@ -57,6 +57,32 @@ nav {
   color: var(--orange);
   margin-bottom: 1rem;
 }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ink);
+  opacity: 0.65;
+  margin-bottom: 1.5rem;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.back-link:hover { opacity: 1; color: var(--orange); }
+.back-link svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  transition: transform 0.2s ease;
+}
+.back-link:hover svg { transform: translateX(-3px); }
 .blog-header h1 {
   font-family: "dejanire-headline", 'Fraunces', serif;
   font-size: clamp(3rem, 8vw, 6rem);
@@ -72,6 +98,87 @@ nav {
   font-size: 1.3rem;
   max-width: 600px;
   opacity: 0.85;
+}
+
+.blog-search {
+  max-width: 1100px;
+  margin: -1.5rem auto 3.5rem;
+  padding: 0 2rem;
+}
+.blog-search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 520px;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.blog-search-form:focus-within {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255, 143, 28, 0.18);
+}
+.blog-search-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 0.55;
+}
+.blog-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 1rem;
+  color: var(--ink);
+  padding: 0.4rem 0;
+}
+.blog-search-input:focus { outline: none; }
+.blog-search-input::placeholder { color: var(--ink); opacity: 0.45; }
+.blog-search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.blog-search-clear {
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.blog-search-clear:hover { background: var(--ink); color: var(--paper); }
+.blog-search-clear svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+.posts-search-summary {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.6;
+  margin-bottom: 1.75rem;
+}
+@media (max-width: 700px) {
+  .blog-search { margin-top: -0.5rem; padding: 0 1.25rem; }
 }
 
 .post-sections {
@@ -175,7 +282,7 @@ nav {
 }
 .posts-section-title {
   font-family: "dejanire-headline", 'Fraunces', serif;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -309,7 +416,7 @@ nav {
 }
 .posts-group-title {
   font-family: "dejanire-headline", 'Fraunces', serif;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -324,7 +431,7 @@ nav {
 }
 .posts-subsection-title {
   font-family: "dejanire-headline", 'Fraunces', serif;
-  font-size: 1.25rem;
+  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -582,6 +689,7 @@ article.post {
 }
 .social-row {
   display: flex;
+  justify-content: center;
   gap: 0.6rem;
 }
 .social-row a {
