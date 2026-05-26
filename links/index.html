@@ -126,6 +126,7 @@
   .link.has-thumb {
     padding: 2.5rem 5rem;
   }
+  #latest-posts { display: contents; }
   .link-thumb {
     position: absolute;
     left: 6px;
@@ -180,9 +181,9 @@
       <img class="link-thumb" src="/blog/images/chocolate-chip-480w.jpg" alt="" loading="lazy">
       Sensible Bakery NYC
     </a>
-    <a class="link has-thumb" href="/blog/">
-      <img class="link-thumb" src="/about-480w.jpg" alt="" loading="lazy">
-      Blog
+    <div id="latest-posts"></div>
+    <a class="link" href="/blog/">
+      More from the blog &rarr;
     </a>
     <a class="link" href="https://instagram.com/wassembakes" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -223,6 +224,32 @@
       });
     }
   });
+})();
+
+(function () {
+  const container = document.getElementById('latest-posts');
+  if (!container) return;
+  function thumbSrc(image) {
+    if (!image) return '/about-480w.jpg';
+    const dot = image.lastIndexOf('.');
+    if (dot < 0) return '/blog/images/' + image;
+    return '/blog/images/' + image.substring(0, dot) + '-480w' + image.substring(dot);
+  }
+  fetch('/blog/posts.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (posts) {
+      const latest = posts
+        .slice()
+        .sort(function (a, b) { return b.date.localeCompare(a.date); })
+        .slice(0, 3);
+      container.innerHTML = latest.map(function (p) {
+        return '<a class="link has-thumb" href="/blog/' + p.slug + '.html">'
+          + '<img class="link-thumb" src="' + thumbSrc(p.image) + '" alt="" loading="lazy">'
+          + p.title
+          + '</a>';
+      }).join('');
+    })
+    .catch(function () { /* leave empty; the "More from the blog" link remains */ });
 })();
 </script>
 </body>
