@@ -144,6 +144,7 @@ Standard blog-post fields plus:
 {
   "slug": "{{slug}}",
   "title": "{{title}}",
+  "shortTitle": "{{short title for links page, optional}}",
   "excerpt": "{{excerpt}}",
   "date": "{{YYYY-MM-DD}}",
   "dateDisplay": "{{Month DD, YYYY}}",
@@ -155,6 +156,7 @@ Standard blog-post fields plus:
 
 - `tags` — always start with `"Recipes"` for recipe posts; add dietary tags after
 - `recipeTags` — dietary attributes only (subset of `tags` minus `"Recipes"`). Drives the recipe filter UI on `/blog/recipes.html`
+- `shortTitle` — optional. If the full title is too long for the links page (`/links/`), set a 2–4 word version that still reads as the recipe (e.g. `"DIY Yogurt Substitute"` instead of `"DIY Yogurt Substitute for Baking (When You're in a Pinch)"`). Falls back to `title` if not set
 
 ## Ingredient & measurement conventions
 
