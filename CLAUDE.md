@@ -8,6 +8,12 @@ Source for **wassembakes.com** — Wassem Moarsi's personal creator-brand site.
 - **Auto-deploy from `main`** — pushing to `main` ships to production
 - No staging branch; test locally before pushing
 
+## Workflow
+
+- **Pull from prod first.** Before starting any work, run `.\_pull.ps1`. It does `git pull` in `~/wassembakes/` and mirrors deploy → staging. Skipping this risks overwriting changes made from another machine or via the GitHub web UI.
+- Edit in `~/wassembakes-staging/`. Test locally with `.\_serve.ps1`.
+- To deploy: robocopy staging → `~/wassembakes/`, then commit and push from there. Robocopy must exclude `.git`, `.claude`, and `_*.ps1`.
+
 ## Stack
 
 - **Plain HTML / CSS / JS.** No build step, no bundler, no framework.
