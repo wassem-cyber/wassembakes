@@ -9,41 +9,31 @@ A recipe post is a blog post with a formal recipe block. Most publishing mechani
 
 This skill covers what's different for recipes: the recipe-card pattern, the narrative variant, schema.org markup, posts.json fields specific to recipes, and ingredient/measurement conventions.
 
-## Two recipe patterns
+## Canonical post structure
 
-Pick one based on the shape of the recipe.
+Every recipe post uses the same shape. The two best references are `whippable-vegan-heavy-cream.html` (most complete — tables with bakers %, variation tables, equipment, instructions, common failures section) and `diy-yogurt-substitute.html` (same pattern, smaller scale).
 
-### Pattern A — Recipe card (default)
+Structure inside `.post-body`, in order:
 
-One main recipe, formal structure. Used by `lemon-zucchini-protein-muffins.html`, `pumpkin-pie-muffin.html`, etc.
+1. **Hook** — 1–4 paragraphs that state the problem or insight. No food-blogger preamble.
+2. **"The Logic" / "What X Is Really Doing" section** — an `<h2>` that explains the science or principle, followed by an `<h3>` for each main ingredient and a paragraph on *why it's there* (not what it is). This is the educational core.
+3. **Optional inline image** between the logic section and the recipe card.
+4. **`<div class="recipe-card" id="recipe">`** — the formal recipe block (details below).
+5. **Post-recipe sections** — typically "When to Use Which" (if there are variations), "What You Can Do With It" (use cases), and **"Common Failures and Fixes"** (always include if there are any failure modes — this is what makes the post genuinely useful).
+6. **Closing line** — one sentence to land it.
 
-Structure inside `.post-body`:
-
-1. Story intro (1–4 paragraphs) — context, why this recipe exists, what makes it work
-2. Optional in-line images
-3. **`<div class="recipe-card" id="recipe">`** — the formal recipe block
-4. Optional closing notes after the card
-
-Always include a **Skip to recipe** link in the post header so readers can jump to the card.
-
-### Pattern B — Narrative recipe
-
-Multiple ingredient lists, variations, or an essay-led recipe. Used when the recipe is more about the *technique* than reproducing one dish exactly (e.g. "DIY Yogurt Substitute" with vinegar + sourdough variations).
-
-No `recipe-card` div, no skip-to-recipe link. Ingredients appear as plain `<ul>` lists inside the prose, under `<h2>`/`<h3>` section headings. Each variation gets its own list.
-
-Schema.org markup is optional for this pattern (multiple recipes in one post don't map cleanly to a single Recipe object — pick the primary variation if you include it, or skip).
+Always include a **Skip to recipe** link in the post header.
 
 ## Post file template
 
 Use the [[blog-post]] template as the base. Recipe posts add:
 
-- **Skip-to-recipe link** in `.post-header` (Pattern A only)
-- **`.recipe-card` block** in `.post-body` (Pattern A only)
-- **Schema.org Recipe JSON-LD** in `<head>` (Pattern A default; Pattern B optional)
-- **`recipeTags` array** in posts.json entry (both patterns)
+- **Skip-to-recipe link** in `.post-header`
+- **`.recipe-card` block** in `.post-body`
+- **Schema.org Recipe JSON-LD** in `<head>`
+- **`recipeTags` array** in posts.json entry
 
-### Skip-to-recipe link (Pattern A)
+### Skip-to-recipe link
 
 Inside `.post-header`, after `<div class="post-tags" data-post-tags></div>`:
 
@@ -51,14 +41,18 @@ Inside `.post-header`, after `<div class="post-tags" data-post-tags></div>`:
 <a class="skip-to-recipe" href="#recipe">Skip to recipe &darr;</a>
 ```
 
-### Recipe card block (Pattern A)
+### Recipe card block
 
-Place inside `.post-body`, after the intro paragraphs and any in-line images:
+Place inside `.post-body`, after the intro and logic sections. Order inside the card: title → meta → hero → Equipment → Ingredients (table) → Variation(s) (if any) → Instructions.
 
 ```html
 <div class="recipe-card" id="recipe">
   <h2 class="recipe-card-title">{{recipe title}}</h2>
   <div class="recipe-card-meta">
+    <div class="recipe-meta-item">
+      <h4 class="recipe-meta-label">Yield</h4>
+      <p class="recipe-meta-value">{{N g / N servings}}</p>
+    </div>
     <div class="recipe-meta-item">
       <h4 class="recipe-meta-label">Prep time</h4>
       <p class="recipe-meta-value">{{N min}}</p>
@@ -67,38 +61,52 @@ Place inside `.post-body`, after the intro paragraphs and any in-line images:
       <h4 class="recipe-meta-label">Bake time</h4>
       <p class="recipe-meta-value">{{N min}}</p>
     </div>
-    <!-- Optional additional meta items: Yield, Total time, Chill time, etc. -->
+    <!-- Pick 2–4 that apply: Yield, Prep time, Bake time, Cook time, Chill time, Rest time, Total time. -->
   </div>
   <img class="recipe-card-hero" src="images/{{slug}}-flatlay-800w.jpg" alt="{{alt}}" loading="lazy" decoding="async"
     srcset="images/{{slug}}-flatlay-480w.jpg 480w, images/{{slug}}-flatlay-800w.jpg 800w, images/{{slug}}-flatlay-1200w.jpg 1200w"
     sizes="(max-width: 600px) 100vw, (max-width: 1024px) 800px, 1200px">
 
-  <h3>Ingredients:</h3>
-  <ul>
-    <li>{{amount}} {{ingredient}}</li>
-    <!-- ... -->
-  </ul>
-
-  <h3>Equipment:</h3>
+  <h3>Equipment</h3>
   <ul>
     <li>{{tool}}</li>
-    <!-- ... -->
   </ul>
 
-  <h3>Steps:</h3>
+  <h3>Ingredients</h3>
+  <table>
+    <thead>
+      <tr><th>Ingredient</th><th>Weight</th><th>%</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>{{Ingredient}}</td><td>{{Ng}}</td><td>{{N.NN%}}</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>{{Ng}}</strong></td><td><strong>100%</strong></td></tr>
+    </tbody>
+  </table>
+
+  <!-- Variation table (optional) -->
+  <h3>{{Variation name}} (Optional/Advanced)</h3>
+  <p>{{One paragraph: when and why to use this variation.}}</p>
+  <table>
+    <!-- same structure as Ingredients -->
+  </table>
+  <blockquote><strong>Warning:</strong> {{any safety note, e.g. raw starter, hot sugar}}</blockquote>
+
+  <h3>Instructions</h3>
   <ol>
-    <li>{{step instruction}}</li>
-    <!-- ... -->
+    <li>{{step}}</li>
   </ol>
 </div>
 ```
 
 Notes:
 - Use `id="recipe"` exactly — the skip link depends on it.
-- Meta items are flexible: include whichever apply (Prep, Bake, Cook, Chill, Rest, Yield, Total). 2–4 items reads cleanest.
+- **Ingredients as a `<table>` with Weight + % columns is the standard.** Bakers percentages let readers scale up or down. Compute % as `ingredient_g / total_g * 100`, two decimals. End with a bold Total row.
+- Meta items: pick 2–4. Section headings (`<h3>`) inside the card have **no trailing colon** ("Ingredients", not "Ingredients:").
 - Equipment list is optional — drop it for trivial mixes (whisk + bowl).
+- Variations get their own `<h3>` + table inside the card (e.g. "Aquafaba Version" in the heavy cream post, "Sourdough Version" in the yogurt substitute post).
+- For variations with separate instructions, use an `<h4>` "{{Variation}} Instructions" + its own `<ol>` after the main Instructions list.
 
-### Schema.org Recipe JSON-LD (Pattern A default)
+### Schema.org Recipe JSON-LD
 
 Add inside `<head>`, after the `<link rel="stylesheet" href="blog.css">` line. Fills in fields from the recipe card.
 
@@ -193,9 +201,11 @@ Both should be served via `srcset` at 480w/800w/1200w. Drop a 1600px master into
 
 Most recipe posts link to a related Sensible Edibles product (the muffin posts all link to the matching bakery product). Use the `.post-footer .product-cta` block with an image. If no matching product exists, skip the CTA entirely — don't force-fit.
 
-## Worked example
+## Worked examples
 
-The DIY Yogurt Substitute post is the canonical Pattern B (narrative) example — see `blog/diy-yogurt-substitute.html` once published. Lemon Zucchini Protein Muffins is the canonical Pattern A (recipe card) example — see `blog/lemon-zucchini-protein-muffins.html`.
+- **`blog/whippable-vegan-heavy-cream.html`** — the most complete reference. Hook + logic with per-ingredient `<h3>` rationale, recipe card with main ingredient table + aquafaba variation table + numbered instructions, post-recipe "What You Can Do With It" and "Common Failures and Fixes" sections.
+- **`blog/diy-yogurt-substitute.html`** — same pattern at smaller scale, with an "Advanced" sourdough variation and separate variation-instructions block.
+- **`blog/lemon-zucchini-protein-muffins.html`** — older post; uses `<ul>` for ingredients instead of a table. Acceptable but tables-with-% is preferred going forward.
 
 ## Commit message
 
