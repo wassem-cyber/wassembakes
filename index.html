@@ -369,6 +369,72 @@
   }
   .email-form button:hover { background: var(--orange); transform: scale(1.03); box-shadow: 0 8px 18px -10px rgba(26, 23, 20, 0.2); }
 
+  /* Newsletter popup */
+  .popup-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    background: rgba(26, 23, 20, 0.6);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .popup-overlay[hidden] { display: none; }
+  .popup-overlay.show { opacity: 1; }
+  .popup {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    width: 100%; max-width: 720px;
+    background: var(--cream);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.5);
+    transform: translateY(14px);
+    transition: transform 0.35s ease;
+  }
+  .popup-overlay.show .popup { transform: translateY(0); }
+  .popup-text { padding: 2.75rem 2.25rem; }
+  .popup-text h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.85rem;
+  }
+  .popup-text p { font-size: 0.98rem; opacity: 0.8; max-width: 34ch; }
+  .popup-text .email-form { margin-top: 1.5rem; }
+  .popup-msg {
+    margin-top: 0.85rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    min-height: 1em;
+  }
+  .popup-image { position: relative; min-height: 100%; }
+  .popup-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .popup-close {
+    position: absolute; top: 0.75rem; right: 0.85rem; z-index: 3;
+    width: 2.1rem; height: 2.1rem;
+    display: flex; align-items: center; justify-content: center;
+    border: none; border-radius: 50%;
+    background: rgba(250, 250, 247, 0.9);
+    color: var(--ink);
+    font-size: 1.5rem; line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .popup-close:hover { background: var(--paper); transform: scale(1.08); }
+  @media (max-width: 640px) {
+    .popup { grid-template-columns: 1fr; max-width: 400px; }
+    .popup-image { order: -1; height: 150px; min-height: 150px; }
+    .popup-image img { position: static; height: 150px; }
+    .popup-text { padding: 2rem 1.5rem; }
+    .popup-text h2 { font-size: 1.6rem; }
+  }
+
   /* Blog link */
   .blog-link, .shop-link { background: var(--paper); }
   .blog-subheading {
@@ -1018,6 +1084,24 @@
   </div>
 </section>
 
+<div class="popup-overlay" id="popupOverlay" hidden>
+  <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popupHeading">
+    <button class="popup-close" id="popupClose" type="button" aria-label="Close">&times;</button>
+    <div class="popup-text">
+      <h2 id="popupHeading">Join the Kitchen Crew</h2>
+      <p>Recipes, tips, and more! Never miss a post by signing up for the newsletter, plus get exclusive updates and deals on baked goods.</p>
+      <form class="email-form" id="popupForm">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="popup-msg" id="popupMsg"></div>
+    </div>
+    <div class="popup-image">
+      <picture><source type="image/avif" srcset="popup-480w.avif 480w, popup-800w.avif 800w, popup-1200w.avif 1200w" sizes="(max-width: 640px) 400px, 320px"><source type="image/webp" srcset="popup-480w.webp 480w, popup-800w.webp 800w, popup-1200w.webp 1200w" sizes="(max-width: 640px) 400px, 320px"><img src="popup-800w.jpg" alt="Wassem baking at a stand mixer" loading="lazy" decoding="async" srcset="popup-480w.jpg 480w, popup-800w.jpg 800w, popup-1200w.jpg 1200w" sizes="(max-width: 640px) 400px, 320px"></picture>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-wrap">
     <div>© 2026 Wassem Moarsi · All rights reserved</div>
@@ -1063,6 +1147,52 @@
       msg.textContent = "Something went wrong. Try again.";
     });
   });
+})();
+(function () {
+  var overlay = document.getElementById('popupOverlay');
+  if (!overlay) return;
+  var STORAGE_KEY = 'kitchenCrewPopupSeen';
+  try { if (localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+
+  var closeBtn = document.getElementById('popupClose');
+  var form = document.getElementById('popupForm');
+  var msg = document.getElementById('popupMsg');
+  var APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyloIXcsvJwHgj689X7_QjBXwpQ5CiMLk1suHf66tRR3-SHzC399UL0ele7VbwGbZgcfQ/exec";
+
+  function markSeen() { try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {} }
+  function openPopup() {
+    overlay.hidden = false;
+    requestAnimationFrame(function () { overlay.classList.add('show'); });
+    markSeen();
+  }
+  function closePopup() {
+    overlay.classList.remove('show');
+    setTimeout(function () { overlay.hidden = true; }, 350);
+  }
+
+  closeBtn.addEventListener('click', closePopup);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closePopup(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closePopup(); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = form.querySelector('input[type="email"]').value;
+    msg.textContent = "Signing you up…";
+    fetch(APPSCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email=' + encodeURIComponent(email) + '&source=wassembakes.com-popup'
+    }).then(function () {
+      msg.textContent = "Thanks — you're in!";
+      form.reset();
+      setTimeout(closePopup, 1500);
+    }).catch(function () {
+      msg.textContent = "Something went wrong. Try again.";
+    });
+  });
+
+  setTimeout(openPopup, 1200);
 })();
 (function () {
   var featureEl = document.querySelector('[data-blog-feature]');

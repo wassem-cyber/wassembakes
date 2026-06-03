@@ -1,6 +1,19 @@
 (function () {
   const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyloIXcsvJwHgj689X7_QjBXwpQ5CiMLk1suHf66tRR3-SHzC399UL0ele7VbwGbZgcfQ/exec";
 
+  // "Email this recipe" mailer. Deploy .claude/recipe-mailer.gs as a Google
+  // Apps Script web app (Deploy → New deployment → Web app, "Anyone" access)
+  // and paste its /exec URL here. Until then, the email button shows a friendly
+  // "not set up yet" message instead of failing.
+  const RECIPE_MAIL_URL = "https://script.google.com/macros/s/AKfycbwA2H-9Uhsmd9tGBkIBpzDiAyft3qpmD_xfnyUIIuy7D6g8IMsrslVg_wWp8UkJN7B5/exec";
+
+  const PRINT_ICON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="6" y="13" width="12" height="8" rx="1"/></svg>';
+  const EMAIL_ICON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7.5 9 6 9-6"/></svg>';
+  const PINTEREST_ICON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345c-.091.378-.293 1.194-.333 1.361-.052.22-.174.266-.402.16-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>';
+
   const CURRENT_SLUG =
     document.querySelector('meta[name="post-slug"]')?.content || "";
 
@@ -522,6 +535,215 @@
     window.addEventListener("resize", update);
   }
 
+  // --- Save This Recipe: print + email ---------------------------------------
+
+  function recipePrintDoc(innerHtml, title) {
+    const css =
+      "*{box-sizing:border-box;}" +
+      "body{font-family:Georgia,'Times New Roman',serif;color:#1A1714;margin:0;padding:2rem;line-height:1.55;}" +
+      ".print-wrap{max-width:720px;margin:0 auto;}" +
+      ".recipe-card-title{font-size:1.9rem;margin:0 0 .6rem;}" +
+      ".recipe-card-meta{display:flex;gap:2.5rem;list-style:none;margin:0 0 1.2rem;padding:0;flex-wrap:wrap;}" +
+      ".recipe-meta-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;margin:0;opacity:.65;}" +
+      ".recipe-meta-value{margin:.1rem 0 0;font-weight:700;font-size:1.15rem;}" +
+      "picture{display:block;}" +
+      "img.recipe-card-hero{max-width:340px;width:100%;height:auto;border-radius:6px;margin:0 0 1.2rem;}" +
+      "h3{margin:1.3rem 0 .4rem;font-size:1.1rem;}" +
+      "ul,ol{margin:0 0 1rem 1.25rem;padding:0;}" +
+      "li{margin-bottom:.35rem;}" +
+      ".print-source{margin-top:1.5rem;font-size:.8rem;color:#888;border-top:1px solid #ddd;padding-top:.8rem;}" +
+      "@media print{body{padding:0;}a{color:inherit;text-decoration:none;}img.recipe-card-hero{max-width:300px;}}";
+    return (
+      '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
+      "<title>" + escapeHtml(title) + "</title>" +
+      '<base href="' + location.href + '">' +
+      "<style>" + css + "</style></head><body><div class=\"print-wrap\">" +
+      innerHtml +
+      '<p class="print-source">Recipe from wassembakes.com &middot; ' + escapeHtml(location.href) + "</p>" +
+      "</div><scr" + "ipt>window.onload=function(){setTimeout(function(){window.focus();window.print();},350);};</scr" + "ipt>" +
+      "</body></html>"
+    );
+  }
+
+  function recipeCardClone(card) {
+    const clone = card.cloneNode(true);
+    clone.querySelectorAll("[data-recipe-save]").forEach((n) => n.remove());
+    return clone;
+  }
+
+  // Flatten <picture> to a single absolute-URL <img> so it renders in email clients.
+  function recipeEmailHtml(card) {
+    const clone = recipeCardClone(card);
+    clone.querySelectorAll("picture").forEach((pic) => {
+      const img = pic.querySelector("img");
+      if (!img) { pic.remove(); return; }
+      const abs = new URL(img.getAttribute("src"), location.href).href;
+      const replacement = document.createElement("img");
+      replacement.src = abs;
+      replacement.alt = img.getAttribute("alt") || "";
+      replacement.setAttribute("width", "320");
+      replacement.style.cssText = "max-width:320px;width:100%;height:auto;border-radius:6px;";
+      pic.replaceWith(replacement);
+    });
+    clone.querySelectorAll("img[srcset]").forEach((im) => im.removeAttribute("srcset"));
+    return clone.innerHTML;
+  }
+
+  let recipeModalCard = null;
+  let recipeModalTitle = "";
+
+  function ensureRecipeEmailModal() {
+    let overlay = document.querySelector("[data-recipe-modal]");
+    if (overlay) return overlay;
+    overlay = document.createElement("div");
+    overlay.className = "recipe-modal-overlay";
+    overlay.setAttribute("data-recipe-modal", "");
+    overlay.hidden = true;
+    overlay.innerHTML =
+      '<div class="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="recipeModalTitle">' +
+        '<button type="button" class="recipe-modal-close" data-recipe-modal-close aria-label="Close">&times;</button>' +
+        '<h3 id="recipeModalTitle">Email this recipe</h3>' +
+        "<p>Enter your email and we&rsquo;ll send the full recipe plus a link to the post.</p>" +
+        '<form class="email-form recipe-modal-form" data-recipe-email-form>' +
+          '<input type="email" placeholder="your@email.com" required>' +
+          '<label class="recipe-modal-check"><input type="checkbox" data-recipe-newsletter checked> Join the Wassem Bakes newsletter</label>' +
+          "<button type=\"submit\">Send Recipe</button>" +
+        "</form>" +
+        '<div class="recipe-modal-msg" data-recipe-modal-msg></div>' +
+      "</div>";
+    document.body.appendChild(overlay);
+
+    const form = overlay.querySelector("[data-recipe-email-form]");
+    const msg = overlay.querySelector("[data-recipe-modal-msg]");
+    function close() {
+      overlay.classList.remove("show");
+      setTimeout(() => { overlay.hidden = true; }, 300);
+    }
+    overlay.querySelector("[data-recipe-modal-close]").addEventListener("click", close);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !overlay.hidden) close();
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!recipeModalCard) return;
+      const email = form.querySelector('input[type="email"]').value;
+      if (!RECIPE_MAIL_URL) {
+        msg.textContent = "Email sending isn’t set up yet — check back soon.";
+        return;
+      }
+      msg.textContent = "Sending…";
+      // Optional newsletter opt-in — same Google Sheet as the newsletter form.
+      const wantsNewsletter = form.querySelector("[data-recipe-newsletter]")?.checked;
+      if (wantsNewsletter && APPSCRIPT_URL) {
+        fetch(APPSCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "email=" + encodeURIComponent(email) + "&source=recipe-email",
+        }).catch(() => {});
+      }
+      fetch(RECIPE_MAIL_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body:
+          "email=" + encodeURIComponent(email) +
+          "&title=" + encodeURIComponent(recipeModalTitle) +
+          "&url=" + encodeURIComponent(location.href) +
+          "&html=" + encodeURIComponent(recipeEmailHtml(recipeModalCard)),
+      })
+        .then(() => {
+          msg.textContent = "Sent! Check your inbox.";
+          form.reset();
+          setTimeout(close, 1600);
+        })
+        .catch(() => {
+          msg.textContent = "Something went wrong. Try again.";
+        });
+    });
+
+    overlay._close = close;
+    return overlay;
+  }
+
+  function openRecipeEmailModal(card, title) {
+    recipeModalCard = card;
+    recipeModalTitle = title;
+    const overlay = ensureRecipeEmailModal();
+    const form = overlay.querySelector("[data-recipe-email-form]");
+    const msg = overlay.querySelector("[data-recipe-modal-msg]");
+    msg.textContent = "";
+    form.reset();
+    overlay.hidden = false;
+    requestAnimationFrame(() => overlay.classList.add("show"));
+    setTimeout(() => form.querySelector('input[type="email"]').focus(), 50);
+  }
+
+  function wireRecipeSave() {
+    const card = document.querySelector(".recipe-card");
+    if (!card) return;
+
+    const save = document.createElement("div");
+    save.className = "recipe-save";
+    save.setAttribute("data-recipe-save", "");
+    save.innerHTML =
+      '<span class="recipe-save-label">Save This Recipe</span>' +
+      '<div class="recipe-save-actions">' +
+        '<button type="button" class="recipe-save-btn" data-recipe-print aria-label="Print recipe">' +
+          PRINT_ICON + "</button>" +
+        '<button type="button" class="recipe-save-btn" data-recipe-email aria-label="Email recipe">' +
+          EMAIL_ICON + "</button>" +
+        '<button type="button" class="recipe-save-btn is-pinterest" data-recipe-pin aria-label="Save recipe to Pinterest">' +
+          PINTEREST_ICON + "</button>" +
+      "</div>";
+
+    // Place directly below the recipe card image (falls back to meta, then top).
+    const hero = card.querySelector(".recipe-card-hero");
+    const anchor =
+      (hero && hero.closest("picture")) ||
+      hero ||
+      card.querySelector(".recipe-card-meta");
+    if (anchor && card.contains(anchor)) {
+      anchor.insertAdjacentElement("afterend", save);
+    } else {
+      card.insertBefore(save, card.firstChild);
+    }
+
+    const title = (
+      card.querySelector(".recipe-card-title")?.textContent || document.title
+    ).trim();
+
+    save.querySelector("[data-recipe-print]").addEventListener("click", function () {
+      const clone = recipeCardClone(card);
+      const win = window.open("", "_blank");
+      if (!win) return;
+      win.document.open();
+      win.document.write(recipePrintDoc(clone.innerHTML, title));
+      win.document.close();
+    });
+
+    save.querySelector("[data-recipe-email]").addEventListener("click", function () {
+      openRecipeEmailModal(card, title);
+    });
+
+    save.querySelector("[data-recipe-pin]").addEventListener("click", function () {
+      const heroImg = card.querySelector(".recipe-card-hero");
+      let media = "";
+      if (heroImg) {
+        const src = (heroImg.getAttribute("src") || "").replace(/-800w\./, "-1200w.");
+        if (src) media = new URL(src, location.href).href;
+      }
+      const pinUrl =
+        "https://www.pinterest.com/pin/create/button/?url=" +
+        encodeURIComponent(location.href) +
+        "&media=" + encodeURIComponent(media) +
+        "&description=" + encodeURIComponent(title);
+      window.open(pinUrl, "_blank", "noopener,noreferrer,width=750,height=600");
+    });
+  }
+
   async function init() {
     const posts = await loadPosts();
     renderIndexList(posts);
@@ -529,6 +751,7 @@
     renderSidebarLatest(posts);
     renderPostTags(posts);
     wireNewsletterForm();
+    wireRecipeSave();
     alignSidebarToTitle();
   }
 
