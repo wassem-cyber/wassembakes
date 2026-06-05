@@ -1036,10 +1036,9 @@ article.post {
 /* Save This Recipe */
 .recipe-save {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
   margin: 0 0 2rem;
   padding: 1rem 1.25rem;
   background: var(--paper);
@@ -1049,7 +1048,7 @@ article.post {
 .recipe-save-label {
   font-family: "bettoni-variable", 'Fraunces', serif;
   font-variation-settings: "opsz" 40, "wght" 110;
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   color: var(--ink);
 }
 .recipe-save-actions { display: flex; gap: 0.6rem; }

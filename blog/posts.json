@@ -1,5 +1,16 @@
 [
   {
+    "slug": "vegan-sweetened-condensed-milk",
+    "title": "Vegan Sweetened Condensed Milk",
+    "shortTitle": "Vegan Condensed Milk",
+    "excerpt": "Sweetened condensed milk is a pantry staple that opens up a whole world of possibilities. Make your own at home with only a couple plant-based ingredients.",
+    "date": "2026-06-05",
+    "dateDisplay": "June 5, 2026",
+    "image": "vegan-condensed-milk-hero.jpg",
+    "tags": ["Recipes", "Vegan", "Gluten-Free"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
     "slug": "the-complete-guide-to-salt-in-baking",
     "title": "The Complete Guide to Salt in Baking",
     "shortTitle": "Salt in Baking",
