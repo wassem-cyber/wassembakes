@@ -1,5 +1,16 @@
 [
   {
+    "slug": "sourdough-and-yeasted-cinnamon-rolls",
+    "title": "Sourdough and Yeasted Cinnamon Rolls",
+    "shortTitle": "Cinnamon Rolls",
+    "excerpt": "Gooey, bakery-style cinnamon rolls with three variations.",
+    "date": "2026-07-01",
+    "dateDisplay": "July 1, 2026",
+    "image": "cinnamon-roll-header.jpg",
+    "tags": ["Recipes", "Gluten-Free", "Vegan"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
     "slug": "two-ways-to-use-flax-in-baking",
     "title": "Two Ways to Use Flax in Your Baking",
     "shortTitle": "Two Ways to Use Flax",
