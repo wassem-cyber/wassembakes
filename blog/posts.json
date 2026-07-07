@@ -1,5 +1,16 @@
 [
   {
+    "slug": "blueberry-rosemary-muffins",
+    "title": "Blueberry Rosemary Muffins",
+    "shortTitle": "Blueberry Rosemary Muffins",
+    "excerpt": "A staff-favorite gluten-free, vegan muffin — sweet blueberries and maple with just enough fresh rosemary for a subtle, savory lift.",
+    "date": "2026-07-07",
+    "dateDisplay": "July 7, 2026",
+    "image": "blueberry-rosemary-hero.jpg",
+    "tags": ["Recipes", "Gluten-Free", "Vegan"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
     "slug": "bakery-style-muffins-with-the-creaming-method",
     "title": "Bakery Style Muffins With the Creaming Method",
     "shortTitle": "Creaming Method Muffins",
