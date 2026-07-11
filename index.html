@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- wb-theme-loader -->
+<script>
+(function(){try{
+  fetch("https://us-central1-wassembakes-app.cloudfunctions.net/theme").then(function(r){return r.json();}).then(function(d){
+    if(!d||!d.ok||!d.theme||!d.theme.colors)return;
+    var c=d.theme.colors, s=document.documentElement.style;
+    for(var k in c){ if(c[k]) s.setProperty("--"+k, c[k]); }
+  }).catch(function(){});
+}catch(e){}})();
+</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MG8EPR1Q8G"></script>
 <script>
