@@ -1,5 +1,5 @@
 (function () {
-  const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyloIXcsvJwHgj689X7_QjBXwpQ5CiMLk1suHf66tRR3-SHzC399UL0ele7VbwGbZgcfQ/exec";
+  const APPSCRIPT_URL = "https://us-central1-wassembakes-app.cloudfunctions.net/subscribe";
 
   // "Email this recipe" mailer. Deploy .claude/recipe-mailer.gs as a Google
   // Apps Script web app (Deploy → New deployment → Web app, "Anyone" access)
