@@ -910,6 +910,70 @@
   }
   .contact-card a:hover { border-color: var(--ink); }
 
+  /* Contact form */
+  .contact-form {
+    max-width: 640px;
+    margin: 2.5rem auto 0;
+    text-align: left;
+  }
+  .cf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  @media (max-width: 560px) { .cf-row { grid-template-columns: 1fr; } }
+  .cf-field { margin-bottom: 1.25rem; }
+  .cf-field label {
+    display: block;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--ink);
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+  .cf-field label em { text-transform: none; letter-spacing: 0; opacity: 0.8; font-style: normal; }
+  .cf-field input,
+  .cf-field textarea {
+    width: 100%;
+    background: var(--paper);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .cf-field textarea { resize: vertical; line-height: 1.5; min-height: 120px; }
+  .cf-field input::placeholder,
+  .cf-field textarea::placeholder { color: var(--ink); opacity: 0.35; }
+  .cf-field input:focus,
+  .cf-field textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(26, 23, 20, 0.12); }
+  .cf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .cf-submit {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 4px;
+    padding: 0.9rem 2rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+  }
+  .cf-submit:hover { transform: scale(1.03); box-shadow: 0 8px 18px -10px rgba(26, 23, 20, 0.35); }
+  .cf-submit:disabled { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
+  .contact-form-msg {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: var(--ink);
+    min-height: 1.2em;
+  }
+  .contact-form-msg.error { color: #7a1f14; }
+
   /* Footer */
   footer {
     background: var(--ink);
@@ -1089,7 +1153,7 @@
     <div class="press-body stagger-item">
       <p>Wassem Moarsi is a professional gluten-free and vegan baker based in Long Island City, New York. He's the owner and operator of Sensible Edible Bakery — the largest gluten-free and vegan bakery in NYC — and has spent over two decades refining commercial-grade allergen-free baking.</p>
       <p>Available for brand partnerships, editorial features, speaking engagements, recipe development, and consulting. Detailed rate and audience information available on request.</p>
-      <a href="mailto:wassem@sensibleedibles.com?subject=Partnership%20Inquiry&body=Hi%20Wassem%2C%0A%0A" class="btn">Get in Touch</a>
+      <a href="#contact" class="btn">Get in Touch</a>
     </div>
   </div>
 </section>
@@ -1098,10 +1162,33 @@
   <div class="contact-wrap">
     <div class="section-label stagger-item">Contact</div>
     <h2 class="section-title stagger-item">Let's <em>connect.</em></h2>
+    <form class="contact-form stagger-item" id="contactForm" novalidate>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cfName">Name</label>
+          <input id="cfName" name="name" type="text" required autocomplete="name" placeholder="Your name">
+        </div>
+        <div class="cf-field">
+          <label for="cfEmail">Email</label>
+          <input id="cfEmail" name="email" type="email" required autocomplete="email" placeholder="you@email.com">
+        </div>
+      </div>
+      <div class="cf-field">
+        <label for="cfSubject">Subject <em>(optional)</em></label>
+        <input id="cfSubject" name="subject" type="text" placeholder="Partnership, press, collab…">
+      </div>
+      <div class="cf-field">
+        <label for="cfMessage">Message</label>
+        <textarea id="cfMessage" name="message" rows="5" required placeholder="Tell me a bit about what you have in mind."></textarea>
+      </div>
+      <input type="text" name="_gotcha" class="cf-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="cf-submit" id="cfSubmit">Send message</button>
+      <div class="contact-form-msg" id="contactMsg" role="status" aria-live="polite"></div>
+    </form>
     <div class="contact-methods stagger-item">
       <div class="contact-card">
         <span>Sponsorships & Press</span>
-        <a href="mailto:wassem@sensibleedibles.com">wassem@sensibleedibles.com</a>
+        <a href="mailto:hello@wassembakes.com">hello@wassembakes.com</a>
       </div>
       <div class="contact-card">
         <span>Bakery Orders</span>
@@ -1176,6 +1263,45 @@
       form.reset();
     }).catch(function () {
       msg.textContent = "Something went wrong. Try again.";
+    });
+  });
+})();
+(function () {
+  var CONTACT_URL = "https://us-central1-wassembakes-app.cloudfunctions.net/contact";
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+  var msg = document.getElementById('contactMsg');
+  var btn = document.getElementById('cfSubmit');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('cfName').value.trim();
+    var email = document.getElementById('cfEmail').value.trim();
+    var message = document.getElementById('cfMessage').value.trim();
+    var subject = document.getElementById('cfSubject').value.trim();
+    if (!name || !email || email.indexOf('@') < 1 || !message) {
+      msg.className = 'contact-form-msg error';
+      msg.textContent = 'Please add your name, a valid email, and a message.';
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    fetch(CONTACT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, subject: subject, message: message, source: 'wassembakes.com', _gotcha: form.querySelector('.cf-hp').value })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      btn.disabled = false; btn.textContent = 'Send message';
+      if (d && d.ok) {
+        form.reset();
+        msg.className = 'contact-form-msg';
+        msg.textContent = "Thanks — your message is on its way. I'll be in touch soon.";
+      } else {
+        msg.className = 'contact-form-msg error';
+        msg.textContent = (d && d.error) || 'Something went wrong. Please try again.';
+      }
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Send message';
+      msg.className = 'contact-form-msg error';
+      msg.textContent = 'Something went wrong — please email hello@wassembakes.com directly.';
     });
   });
 })();
