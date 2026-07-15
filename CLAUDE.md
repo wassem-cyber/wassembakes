@@ -4,15 +4,16 @@ Source for **wassembakes.com** — Wassem Moarsi's personal creator-brand site.
 
 ## Hosting & deploys
 
-- Hosted on **Netlify**
-- **Auto-deploy from `main`** — pushing to `main` ships to production
-- No staging branch; test locally before pushing
+- Hosted on **Netlify**, **auto-deploys from `main`** (GitHub repo `wassem-cyber/wassembakes-website-front-end`).
+- `netlify.toml` configures Netlify to **publish the repo root with no build step** — don't remove it or the deploy fails with "publish directory does not exist."
+- ⚠️ **Two publish paths exist.** A separate "Studio" app can publish posts straight to Netlify without touching git. Last deploy wins, so a naive `git push` can overwrite Studio-only content — `_deploy.ps1`'s safety check guards against this (see Workflow).
+- No staging branch; test locally before pushing.
 
 ## Workflow
 
 - **Pull from prod first.** Before starting any work, run `.\_pull.ps1`. It does `git pull` in `~/wassembakes/` and mirrors deploy → staging. Skipping this risks overwriting changes made from another machine or via the GitHub web UI.
 - Edit in `~/wassembakes-staging/`. Test locally with `.\_serve.ps1`.
-- To deploy: robocopy staging → `~/wassembakes/`, then commit and push from there. Robocopy must exclude `.git`, `.claude`, and `_*.ps1`.
+- **To deploy:** run `.\_deploy.ps1 -Message "what changed"` from staging. It (1) safety-checks that every live post exists in staging — **aborts** if the Studio published something git lacks (so a push can't delete it); (2) mirrors staging → `~/wassembakes/`, excluding `.git`, `.claude`, `_*.ps1`, `CLAUDE.md`; (3) commits + pushes. Netlify deploys in ~30–90s. Bypass the check with `-SkipSafetyCheck` only if the site is unreachable.
 
 ## Stack
 
