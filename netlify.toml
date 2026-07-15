@@ -1,0 +1,8 @@
+# wassembakes.com is a plain static HTML/CSS/JS site — no build step, no
+# framework, no bundler (see CLAUDE.md). Publish the repository root as-is.
+# An empty build command stops Netlify from auto-detecting a framework and
+# looking for a non-existent output directory (e.g. dist), which was causing
+# the "publish directory does not exist" deploy failure.
+[build]
+  command = ""
+  publish = "."
