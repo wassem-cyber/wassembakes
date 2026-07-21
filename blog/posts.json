@@ -1,5 +1,16 @@
 [
   {
+    "slug": "blueberry-cheesecake-bundt",
+    "title": "Blueberry Cheesecake Bundt",
+    "shortTitle": "Blueberry Cheesecake Bundt",
+    "excerpt": "My cinnamon roll dough, reworked into a bundt with a little less oil and spiraled with a vegan cheesecake swirl and blueberry filling.",
+    "date": "2026-07-21",
+    "dateDisplay": "July 21, 2026",
+    "image": "blueberry-cheesecake-bundt-hero.jpg",
+    "tags": ["Recipes", "Gluten-Free", "Vegan"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
     "slug": "add-baking-powder-last",
     "title": "Stop Adding Baking Powder With Your Dry Ingredients",
     "shortTitle": "Add Baking Powder Last",
