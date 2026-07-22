@@ -1033,6 +1033,32 @@ article.post {
   .post-body img.recipe-card-hero { margin-bottom: 1.5rem; }
 }
 
+/* Ingredient sub-group labels under a single Ingredients heading */
+.recipe-card .recipe-subhead {
+  font-family: "bettoni-variable", 'Fraunces', serif;
+  font-variation-settings: "opsz" 40, "wght" 110;
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+/* Side-by-side process photos (portrait) */
+.post-body .process-duo {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.post-body .process-duo > * {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+}
+.post-body .process-duo img {
+  width: 100%;
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
 /* Save This Recipe */
 .recipe-save {
   display: flex;

@@ -1,5 +1,16 @@
 [
   {
+    "slug": "blueberry-cheesecake-buns",
+    "title": "Blueberry Cheesecake Buns",
+    "shortTitle": "Blueberry Cheesecake Buns",
+    "excerpt": "Soft, gluten-free vegan yeasted buns topped with a vegan cheesecake swirl and blueberry filling.",
+    "date": "2026-07-22",
+    "dateDisplay": "July 22, 2026",
+    "image": "blueberry-cheesecake-buns-tray.jpg",
+    "tags": ["Recipes", "Gluten-Free", "Vegan"],
+    "recipeTags": ["Vegan", "Gluten-Free"]
+  },
+  {
     "slug": "add-baking-powder-last",
     "title": "Stop Adding Baking Powder With Your Dry Ingredients",
     "shortTitle": "Add Baking Powder Last",
