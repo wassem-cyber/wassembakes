@@ -1,6 +1,13 @@
 (function () {
   const APPSCRIPT_URL = "https://us-central1-wassembakes-app.cloudfunctions.net/subscribe";
 
+  // Comments backend — a Firebase HTTP Cloud Function (see
+  // .claude/comments-backend/ for the source + deploy steps). GET ?slug=
+  // returns approved comments; POST creates one as "pending" for moderation.
+  // Until the function is deployed the widget degrades gracefully (shows the
+  // form + an empty state; submitting shows a friendly "try later" message).
+  const COMMENTS_URL = "https://us-central1-wassembakes-app.cloudfunctions.net/comments";
+
   // "Email this recipe" mailer. Deploy .claude/recipe-mailer.gs as a Google
   // Apps Script web app (Deploy → New deployment → Web app, "Anyone" access)
   // and paste its /exec URL here. Until then, the email button shows a friendly
@@ -515,6 +522,151 @@
     });
   }
 
+  // --- Comments --------------------------------------------------------------
+
+  function formatCommentDate(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (isNaN(d)) return "";
+    return d.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
+  function renderComment(c) {
+    const body = escapeHtml(c.body || "").replace(/\n/g, "<br>");
+    const date = formatCommentDate(c.createdAt);
+    return `
+      <li class="comment">
+        <div class="comment-head">
+          <span class="comment-author">${escapeHtml(c.name || "Anonymous")}</span>
+          ${date ? `<span class="comment-date">${date}</span>` : ""}
+        </div>
+        <div class="comment-body">${body}</div>
+      </li>`;
+  }
+
+  function renderCommentsList(listEl, titleEl, comments) {
+    const n = comments.length;
+    if (titleEl) {
+      titleEl.textContent = n ? `Comments (${n})` : "Comments";
+    }
+    if (!n) {
+      listEl.innerHTML =
+        '<li class="comments-empty">No comments yet — start the conversation.</li>';
+      return;
+    }
+    listEl.innerHTML = comments.map(renderComment).join("");
+  }
+
+  async function loadComments(listEl, titleEl) {
+    try {
+      const res = await fetch(
+        COMMENTS_URL + "?slug=" + encodeURIComponent(CURRENT_SLUG),
+        { cache: "no-cache" }
+      );
+      if (!res.ok) throw new Error("fetch failed");
+      const data = await res.json();
+      const comments = Array.isArray(data.comments) ? data.comments : [];
+      renderCommentsList(listEl, titleEl, comments);
+    } catch (e) {
+      // Backend not reachable yet — show an inviting empty state, not an error.
+      renderCommentsList(listEl, titleEl, []);
+    }
+  }
+
+  function wireComments() {
+    if (!CURRENT_SLUG) return; // posts only, never listing pages
+    const article = document.querySelector("article.post");
+    if (!article) return;
+
+    const section = document.createElement("section");
+    section.className = "comments";
+    section.id = "comments";
+    section.innerHTML =
+      '<h2 class="comments-title">Comments</h2>' +
+      '<ul class="comments-list" data-comments-list></ul>' +
+      '<form class="comment-form" data-comment-form novalidate>' +
+        '<h3 class="comment-form-title">Leave a comment</h3>' +
+        '<div class="comment-form-row">' +
+          '<input type="text" name="name" placeholder="Your name" maxlength="80" autocomplete="name" required>' +
+          '<input type="email" name="email" placeholder="Email (optional, never shown)" maxlength="120" autocomplete="email">' +
+        "</div>" +
+        '<textarea name="body" placeholder="Share your thoughts…" rows="4" maxlength="2000" required></textarea>' +
+        // Honeypot: real people leave this empty; bots tend to fill every field.
+        '<div class="comment-hp" aria-hidden="true">' +
+          '<label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>' +
+        "</div>" +
+        '<div class="comment-form-actions">' +
+          '<button type="submit">Post comment</button>' +
+          '<span class="comment-form-msg" data-comment-msg></span>' +
+        "</div>" +
+      "</form>";
+
+    article.appendChild(section);
+
+    const listEl = section.querySelector("[data-comments-list]");
+    const titleEl = section.querySelector(".comments-title");
+    const form = section.querySelector("[data-comment-form]");
+    const msg = section.querySelector("[data-comment-msg]");
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    loadComments(listEl, titleEl);
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = form.querySelector('input[name="name"]').value.trim();
+      const email = form.querySelector('input[name="email"]').value.trim();
+      const body = form.querySelector('textarea[name="body"]').value.trim();
+      const website = form.querySelector('input[name="website"]').value; // honeypot
+
+      if (!name || !body) {
+        msg.textContent = "Please add your name and a comment.";
+        return;
+      }
+
+      // Bot filled the honeypot — pretend success, send nothing.
+      if (website) {
+        form.reset();
+        msg.textContent = "Thanks — your comment is awaiting review.";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      msg.textContent = "Posting…";
+
+      fetch(COMMENTS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          slug: CURRENT_SLUG,
+          name: name,
+          email: email,
+          body: body,
+          website: website,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("bad response");
+          return res.json();
+        })
+        .then((data) => {
+          if (!data || !data.ok) throw new Error("not ok");
+          form.reset();
+          msg.textContent = "Thanks — your comment is awaiting review.";
+        })
+        .catch(() => {
+          msg.textContent =
+            "Sorry, we couldn't post that just now. Please try again later.";
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
   function alignSidebarToTitle() {
     const sidebar = document.querySelector(".sidebar");
     const title = document.querySelector(".post-header h1");
@@ -752,6 +904,7 @@
     renderPostTags(posts);
     wireNewsletterForm();
     wireRecipeSave();
+    wireComments();
     alignSidebarToTitle();
   }
 

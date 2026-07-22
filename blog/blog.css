@@ -1268,7 +1268,138 @@ footer.site-footer {
 .site-footer a { opacity: 0.6; transition: opacity 0.2s; }
 .site-footer a:hover { opacity: 1; }
 
+/* --- Comments -------------------------------------------------------------- */
+.comments {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ink);
+}
+.comments-title {
+  font-family: "bettoni-variable", 'Fraunces', serif;
+  font-variation-settings: "opsz" 40, "wght" 110;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+.comments-list {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.comment {
+  background: var(--cream);
+  border-radius: 4px;
+  padding: 1.1rem 1.35rem;
+}
+.comment-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+.comment-author {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.comment-date {
+  font-size: 0.75rem;
+  opacity: 0.55;
+}
+.comment-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.comments-empty {
+  font-style: italic;
+  opacity: 0.6;
+  font-size: 0.95rem;
+}
+
+.comment-form {
+  background: var(--cream);
+  padding: 1.75rem;
+  border-radius: 4px;
+}
+.comment-form-title {
+  font-family: "bettoni-variable", 'Fraunces', serif;
+  font-variation-settings: "opsz" 40, "wght" 110;
+  font-size: 1.25rem;
+  margin-bottom: 1.1rem;
+}
+.comment-form-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.comment-form-row input {
+  flex: 1;
+  min-width: 0;
+}
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 0.9rem;
+  border-radius: 0;
+  color: var(--ink);
+}
+.comment-form textarea {
+  resize: vertical;
+  min-height: 6rem;
+  line-height: 1.5;
+}
+.comment-form input:focus,
+.comment-form textarea:focus {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
+}
+/* Honeypot — hidden from real users, present for bots. */
+.comment-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.comment-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+.comment-form button {
+  padding: 0.75rem 1.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.comment-form button:hover { background: var(--orange); }
+.comment-form button:disabled { opacity: 0.6; cursor: default; }
+.comment-form-msg {
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.75;
+  min-height: 1em;
+}
+
 @media (max-width: 700px) {
   .post-layout { padding: 6rem 1.25rem 3rem; }
   .post-body { font-size: 1.05rem; }
+  .comment-form-row { flex-direction: column; }
+  .comment-form { padding: 1.35rem; }
 }
