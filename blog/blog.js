@@ -3,7 +3,8 @@
 
   // Comments backend — a Firebase HTTP Cloud Function (see
   // .claude/comments-backend/ for the source + deploy steps). GET ?slug=
-  // returns approved comments; POST creates one as "pending" for moderation.
+  // returns approved comments; POST publishes one immediately (and emails a
+  // heads-up to the admin).
   // Until the function is deployed the widget degrades gracefully (shows the
   // form + an empty state; submitting shows a friendly "try later" message).
   const COMMENTS_URL = "https://us-central1-wassembakes-app.cloudfunctions.net/comments";
@@ -87,10 +88,12 @@
   function renderCard(p, cardOptions) {
     const badges =
       cardOptions && cardOptions.showTags ? renderTagBadges(p) : "";
+    const sizes =
+      (cardOptions && cardOptions.sizes) || "(max-width: 600px) 100vw, 400px";
     return `
       <li class="post-card">
         <a href="${p.slug}">
-          <div class="post-card-image">${p.image ? `<img ${imgVariants(p.image, p.title, "(max-width: 600px) 100vw, 400px")} loading="lazy" decoding="async">` : ""}</div>
+          <div class="post-card-image">${p.image ? `<img ${imgVariants(p.image, p.title, sizes)} loading="lazy" decoding="async">` : ""}</div>
           <div class="post-card-content">
             <div class="post-card-date">${p.dateDisplay}</div>
             <h2>${p.title}</h2>
@@ -163,7 +166,7 @@
     const newColumn = `
       <section class="posts-hero-col is-new">
         <h2 class="posts-section-title">New</h2>
-        <ul class="posts is-stack">${renderCard(newest)}</ul>
+        <ul class="posts is-stack">${renderCard(newest, { sizes: "(max-width: 800px) 100vw, 560px" })}</ul>
       </section>`;
     const featuredColumn = featured.length
       ? `
@@ -630,7 +633,7 @@
       // Bot filled the honeypot — pretend success, send nothing.
       if (website) {
         form.reset();
-        msg.textContent = "Thanks — your comment is awaiting review.";
+        msg.textContent = "Thanks — your comment has been posted.";
         return;
       }
 
@@ -655,7 +658,14 @@
         .then((data) => {
           if (!data || !data.ok) throw new Error("not ok");
           form.reset();
-          msg.textContent = "Thanks — your comment is awaiting review.";
+          if (data.held) {
+            // Held by the link/profanity filter — awaits manual approval.
+            msg.textContent = "Thanks — your comment will appear after review.";
+          } else {
+            msg.textContent = "Thanks — your comment has been posted.";
+            // Published immediately, so refresh the list to show it.
+            loadComments(listEl, titleEl);
+          }
         })
         .catch(() => {
           msg.textContent =
