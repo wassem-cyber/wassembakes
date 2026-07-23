@@ -527,6 +527,27 @@
 
   // --- Comments --------------------------------------------------------------
 
+  // Owner ("reply as the site owner") mode. A valid admin secret is stored
+  // locally and sent with the owner's comments/replies; the backend verifies it
+  // and marks those as isOwner (Author badge + spam-filter bypass). The secret
+  // stays in the owner's own browser.
+  const OWNER_NAME = "Wassem";
+  const OWNER_SECRET_KEY = "wb_owner_secret";
+
+  function getOwnerSecret() {
+    try {
+      return localStorage.getItem(OWNER_SECRET_KEY) || "";
+    } catch (e) {
+      return "";
+    }
+  }
+  function setOwnerSecret(v) {
+    try {
+      if (v) localStorage.setItem(OWNER_SECRET_KEY, v);
+      else localStorage.removeItem(OWNER_SECRET_KEY);
+    } catch (e) {}
+  }
+
   function formatCommentDate(iso) {
     if (!iso) return "";
     const d = new Date(iso);
@@ -538,17 +559,48 @@
     });
   }
 
-  function renderComment(c) {
+  // Shared inner markup for a comment (used by both roots and replies).
+  function commentInner(c) {
     const body = escapeHtml(c.body || "").replace(/\n/g, "<br>");
     const date = formatCommentDate(c.createdAt);
-    return `
-      <li class="comment">
-        <div class="comment-head">
-          <span class="comment-author">${escapeHtml(c.name || "Anonymous")}</span>
-          ${date ? `<span class="comment-date">${date}</span>` : ""}
-        </div>
-        <div class="comment-body">${body}</div>
-      </li>`;
+    const badge = c.isOwner
+      ? '<span class="comment-owner-badge">Author</span>'
+      : "";
+    const id = escapeHtml(c.id || "");
+    const name = escapeHtml(c.name || "");
+    return (
+      '<div class="comment-head">' +
+        '<span class="comment-author">' + (name || "Anonymous") + "</span>" +
+        badge +
+        (date ? '<span class="comment-date">' + date + "</span>" : "") +
+      "</div>" +
+      '<div class="comment-body">' + body + "</div>" +
+      '<button type="button" class="comment-reply-btn" data-reply-to="' + id +
+        '" data-reply-name="' + name + '">Reply</button>'
+    );
+  }
+
+  function renderReply(c) {
+    const cls = "comment is-reply" + (c.isOwner ? " is-owner" : "");
+    return (
+      '<li class="' + cls + '" data-comment-id="' + escapeHtml(c.id || "") + '">' +
+        commentInner(c) +
+      "</li>"
+    );
+  }
+
+  function renderThread(root, replies) {
+    const cls = "comment" + (root.isOwner ? " is-owner" : "");
+    const repliesHtml = replies.length
+      ? '<ul class="comment-replies">' + replies.map(renderReply).join("") + "</ul>"
+      : "";
+    return (
+      '<li class="' + cls + '" data-comment-id="' + escapeHtml(root.id || "") + '">' +
+        commentInner(root) +
+        repliesHtml +
+        '<div class="comment-reply-zone"></div>' +
+      "</li>"
+    );
   }
 
   function renderCommentsList(listEl, titleEl, comments) {
@@ -561,7 +613,22 @@
         '<li class="comments-empty">No comments yet — start the conversation.</li>';
       return;
     }
-    listEl.innerHTML = comments.map(renderComment).join("");
+    // Group into 2-level threads: roots in API order (oldest first), replies
+    // under their root. A reply whose parent isn't visible falls back to a root.
+    const byId = {};
+    comments.forEach((c) => { byId[c.id] = c; });
+    const roots = [];
+    const childrenOf = {};
+    comments.forEach((c) => {
+      if (c.parentId && byId[c.parentId]) {
+        (childrenOf[c.parentId] = childrenOf[c.parentId] || []).push(c);
+      } else {
+        roots.push(c);
+      }
+    });
+    listEl.innerHTML = roots
+      .map((r) => renderThread(r, childrenOf[r.id] || []))
+      .join("");
   }
 
   async function loadComments(listEl, titleEl) {
@@ -580,6 +647,204 @@
     }
   }
 
+  // Build a comment form's HTML — the main top-level form, or a compact reply
+  // form when isReply is true.
+  function buildCommentForm(isReply) {
+    const cls = "comment-form" + (isReply ? " comment-reply-form" : "");
+    const heading = isReply
+      ? ""
+      : '<h3 class="comment-form-title">Leave a comment</h3>';
+    const rows = isReply ? "3" : "4";
+    const btnLabel = isReply ? "Post reply" : "Post comment";
+    const cancel = isReply
+      ? '<button type="button" class="comment-reply-cancel">Cancel</button>'
+      : "";
+    return (
+      '<form class="' + cls + '" data-comment-form novalidate>' +
+        heading +
+        '<div class="comment-form-row">' +
+          '<input type="text" name="name" placeholder="Your name" maxlength="80" autocomplete="name" required>' +
+          '<input type="email" name="email" placeholder="Email (optional, never shown)" maxlength="120" autocomplete="email">' +
+        "</div>" +
+        '<textarea name="body" placeholder="Share your thoughts…" rows="' + rows + '" maxlength="2000" required></textarea>' +
+        // Honeypot: real people leave this empty; bots tend to fill every field.
+        '<div class="comment-hp" aria-hidden="true">' +
+          '<label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>' +
+        "</div>" +
+        '<div class="comment-form-actions">' +
+          '<button type="submit">' + btnLabel + "</button>" +
+          cancel +
+          '<span class="comment-form-msg" data-comment-msg></span>' +
+        "</div>" +
+      "</form>"
+    );
+  }
+
+  function postComment(payload) {
+    return fetch(COMMENTS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("bad response");
+        return res.json();
+      })
+      .then((data) => {
+        if (!data || !data.ok) throw new Error("not ok");
+        return data;
+      });
+  }
+
+  // Wire one comment form. parentId is null for the top-level form or the
+  // thread root id for a reply; onPosted runs once a comment publishes.
+  function wireCommentForm(form, parentId, onPosted) {
+    const msg = form.querySelector("[data-comment-msg]");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const nameInput = form.querySelector('input[name="name"]');
+
+    // Signed-in owner: default the name to the owner's.
+    if (getOwnerSecret() && nameInput && !nameInput.value) {
+      nameInput.value = OWNER_NAME;
+    }
+
+    const cancelBtn = form.querySelector(".comment-reply-cancel");
+    if (cancelBtn) {
+      cancelBtn.addEventListener("click", function () {
+        const zone = form.closest(".comment-reply-zone");
+        if (zone) zone.innerHTML = "";
+      });
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = nameInput.value.trim();
+      const email = form.querySelector('input[name="email"]').value.trim();
+      const body = form.querySelector('textarea[name="body"]').value.trim();
+      const website = form.querySelector('input[name="website"]').value; // honeypot
+
+      if (!name || !body) {
+        msg.textContent = "Please add your name and a comment.";
+        return;
+      }
+      // Bot filled the honeypot — pretend success, send nothing.
+      if (website) {
+        form.reset();
+        msg.textContent = "Thanks — your comment has been posted.";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      msg.textContent = "Posting…";
+
+      const payload = {
+        slug: CURRENT_SLUG,
+        name: name,
+        email: email,
+        body: body,
+        website: website,
+      };
+      if (parentId) payload.parentId = parentId;
+      const secret = getOwnerSecret();
+      if (secret) payload.secret = secret;
+
+      postComment(payload)
+        .then((data) => {
+          form.reset();
+          if (secret && nameInput) nameInput.value = OWNER_NAME;
+          if (data.held) {
+            // Held by the link/profanity filter — awaits manual approval.
+            msg.textContent = "Thanks — your comment will appear after review.";
+          } else {
+            msg.textContent = "Thanks — your comment has been posted.";
+            // Published immediately, so refresh the thread to show it.
+            if (onPosted) setTimeout(onPosted, 500);
+          }
+        })
+        .catch(() => {
+          msg.textContent =
+            "Sorry, we couldn't post that just now. Please try again later.";
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
+  // The "sign in / out as the site owner" control under the comment form.
+  function renderOwnerBar(barEl, mainForm) {
+    function refreshMainName() {
+      if (!mainForm) return;
+      const ni = mainForm.querySelector('input[name="name"]');
+      if (!ni) return;
+      if (getOwnerSecret()) {
+        if (!ni.value) ni.value = OWNER_NAME;
+      } else if (ni.value === OWNER_NAME) {
+        ni.value = "";
+      }
+    }
+
+    if (getOwnerSecret()) {
+      barEl.innerHTML =
+        '<span class="comment-owner-status">Replying as ' +
+          escapeHtml(OWNER_NAME) + "</span>" +
+        '<button type="button" class="comment-owner-link" data-owner-signout>Sign out</button>';
+      barEl
+        .querySelector("[data-owner-signout]")
+        .addEventListener("click", function () {
+          setOwnerSecret("");
+          renderOwnerBar(barEl, mainForm);
+          refreshMainName();
+        });
+      refreshMainName();
+      return;
+    }
+
+    barEl.innerHTML =
+      '<button type="button" class="comment-owner-link" data-owner-signin>' +
+        "Site owner? Sign in to reply as " + escapeHtml(OWNER_NAME) + "</button>" +
+      '<span class="comment-owner-entry" hidden>' +
+        '<input type="password" class="comment-owner-secret" placeholder="Admin secret" autocomplete="off">' +
+        '<button type="button" class="comment-owner-save">Save</button>' +
+      "</span>";
+
+    const signin = barEl.querySelector("[data-owner-signin]");
+    const entry = barEl.querySelector(".comment-owner-entry");
+    const input = barEl.querySelector(".comment-owner-secret");
+    const save = barEl.querySelector(".comment-owner-save");
+
+    signin.addEventListener("click", function () {
+      signin.hidden = true;
+      entry.hidden = false;
+      input.focus();
+    });
+    function attempt() {
+      const v = input.value.trim();
+      if (!v) return;
+      save.disabled = true;
+      // Verify against the admin-only endpoint before storing the secret.
+      fetch(COMMENTS_URL + "?pending=1", { headers: { "X-Admin-Secret": v } })
+        .then((r) => {
+          if (!r.ok) throw new Error("bad secret");
+          setOwnerSecret(v);
+          renderOwnerBar(barEl, mainForm);
+          refreshMainName();
+        })
+        .catch(() => {
+          input.value = "";
+          input.placeholder = "Incorrect — try again";
+          save.disabled = false;
+        });
+    }
+    save.addEventListener("click", attempt);
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        attempt();
+      }
+    });
+  }
+
   function wireComments() {
     if (!CURRENT_SLUG) return; // posts only, never listing pages
     const article = document.querySelector("article.post");
@@ -591,89 +856,48 @@
     section.innerHTML =
       '<h2 class="comments-title">Comments</h2>' +
       '<ul class="comments-list" data-comments-list></ul>' +
-      '<form class="comment-form" data-comment-form novalidate>' +
-        '<h3 class="comment-form-title">Leave a comment</h3>' +
-        '<div class="comment-form-row">' +
-          '<input type="text" name="name" placeholder="Your name" maxlength="80" autocomplete="name" required>' +
-          '<input type="email" name="email" placeholder="Email (optional, never shown)" maxlength="120" autocomplete="email">' +
-        "</div>" +
-        '<textarea name="body" placeholder="Share your thoughts…" rows="4" maxlength="2000" required></textarea>' +
-        // Honeypot: real people leave this empty; bots tend to fill every field.
-        '<div class="comment-hp" aria-hidden="true">' +
-          '<label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>' +
-        "</div>" +
-        '<div class="comment-form-actions">' +
-          '<button type="submit">Post comment</button>' +
-          '<span class="comment-form-msg" data-comment-msg></span>' +
-        "</div>" +
-      "</form>";
+      buildCommentForm(false) +
+      '<div class="comment-owner-bar" data-owner-bar></div>';
 
     article.appendChild(section);
 
     const listEl = section.querySelector("[data-comments-list]");
     const titleEl = section.querySelector(".comments-title");
     const form = section.querySelector("[data-comment-form]");
-    const msg = section.querySelector("[data-comment-msg]");
-    const submitBtn = form.querySelector('button[type="submit"]');
+    const ownerBar = section.querySelector("[data-owner-bar]");
 
     loadComments(listEl, titleEl);
+    renderOwnerBar(ownerBar, form);
+    wireCommentForm(form, null, function () {
+      loadComments(listEl, titleEl);
+    });
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = form.querySelector('input[name="name"]').value.trim();
-      const email = form.querySelector('input[name="email"]').value.trim();
-      const body = form.querySelector('textarea[name="body"]').value.trim();
-      const website = form.querySelector('input[name="website"]').value; // honeypot
-
-      if (!name || !body) {
-        msg.textContent = "Please add your name and a comment.";
+    // Reply buttons open an inline reply form inside the thread's root li.
+    listEl.addEventListener("click", function (e) {
+      const btn = e.target.closest(".comment-reply-btn");
+      if (!btn) return;
+      const threadLi = btn.closest("li.comment:not(.is-reply)");
+      if (!threadLi) return;
+      const zone = threadLi.querySelector(".comment-reply-zone");
+      if (!zone) return;
+      // Toggle closed if a reply form is already open here.
+      if (zone.firstChild) {
+        zone.innerHTML = "";
         return;
       }
-
-      // Bot filled the honeypot — pretend success, send nothing.
-      if (website) {
-        form.reset();
-        msg.textContent = "Thanks — your comment has been posted.";
-        return;
-      }
-
-      submitBtn.disabled = true;
-      msg.textContent = "Posting…";
-
-      fetch(COMMENTS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slug: CURRENT_SLUG,
-          name: name,
-          email: email,
-          body: body,
-          website: website,
-        }),
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error("bad response");
-          return res.json();
-        })
-        .then((data) => {
-          if (!data || !data.ok) throw new Error("not ok");
-          form.reset();
-          if (data.held) {
-            // Held by the link/profanity filter — awaits manual approval.
-            msg.textContent = "Thanks — your comment will appear after review.";
-          } else {
-            msg.textContent = "Thanks — your comment has been posted.";
-            // Published immediately, so refresh the list to show it.
-            loadComments(listEl, titleEl);
-          }
-        })
-        .catch(() => {
-          msg.textContent =
-            "Sorry, we couldn't post that just now. Please try again later.";
-        })
-        .finally(() => {
-          submitBtn.disabled = false;
-        });
+      zone.innerHTML = buildCommentForm(true);
+      const replyForm = zone.querySelector("[data-comment-form]");
+      const ta = replyForm.querySelector('textarea[name="body"]');
+      const nameHint = btn.getAttribute("data-reply-name");
+      if (nameHint && ta) ta.value = "@" + nameHint + " ";
+      const parentId = threadLi.getAttribute("data-comment-id");
+      wireCommentForm(replyForm, parentId, function () {
+        loadComments(listEl, titleEl);
+      });
+      const focusTarget = getOwnerSecret()
+        ? ta
+        : replyForm.querySelector('input[name="name"]');
+      if (focusTarget) focusTarget.focus();
     });
   }
 
